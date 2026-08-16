@@ -6,7 +6,7 @@ on:
       - chore/remove-legacy-cms-branding
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   cleanup:
@@ -200,16 +200,18 @@ jobs:
             exit 1
           fi
 
-      - name: Commit cleanup
+      - name: Export verified cleanup diff
         shell: bash
         run: |
-          set -e
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A
-          if git diff --cached --quiet; then
-            echo 'No cleanup changes to commit.'
-            exit 0
-          fi
-          git commit -m 'chore(branding): remove legacy CMS identity'
-          git push origin HEAD:chore/remove-legacy-cms-branding
+          git diff --binary > cleanup.patch
+          git status --short > cleanup-files.txt
+          cat cleanup-files.txt
+
+      - name: Upload verified cleanup diff
+        uses: actions/upload-artifact@v4
+        with:
+          name: verified-branding-cleanup
+          path: |
+            cleanup.patch
+            cleanup-files.txt
+          if-no-files-found: error

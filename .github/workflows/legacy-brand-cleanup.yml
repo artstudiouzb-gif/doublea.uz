@@ -43,7 +43,7 @@ jobs:
         shell: bash
         run: |
           set -e
-          if grep -RInE --exclude-dir=.git --exclude-dir=.github '(ArtStudio|artstudio[.:_/-]|ASDR CMS|asdr-browser-tests|https://asdr\.gov\.uz)' .; then
+          if grep -RInE --exclude-dir=.git --exclude-dir=.github --exclude=cleanup.patch --exclude=cleanup-files.txt '(ArtStudio|artstudio[.:_/-]|ASDR CMS|asdr-browser-tests|https://asdr\.gov\.uz)' .; then
             echo 'Former branding still present outside workflows.' >&2
             exit 1
           fi
@@ -52,6 +52,7 @@ jobs:
         shell: bash
         run: |
           set -e
+          rm -f cleanup.patch cleanup-files.txt
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A

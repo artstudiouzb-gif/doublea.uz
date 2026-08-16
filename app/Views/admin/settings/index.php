@@ -161,8 +161,8 @@ require __DIR__ . '/../layout/header.php';
             <div class="form-field">
                 <label for="smtp_from_name">Имя отправителя (From Name)</label>
                 <input type="text" id="smtp_from_name" name="smtp_from_name" maxlength="120"
-                       value="<?= htmlspecialchars($settings['smtp_from_name'] ?? 'ASDR CMS', ENT_QUOTES) ?>"
-                       placeholder="ASDR CMS">
+                       value="<?= htmlspecialchars($settings['smtp_from_name'] ?? 'DoubleA', ENT_QUOTES) ?>"
+                       placeholder="DoubleA">
             </div>
         </fieldset>
 

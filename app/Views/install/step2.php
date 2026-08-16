@@ -49,7 +49,7 @@ require __DIR__ . '/_header.php';
         <label class="u-inline-aa1820469b" for="db_name">Имя базы данных <span class="u-inline-9dd1207e58">*</span></label>
         <div class="install-input-wrap">
             <?= \App\Core\Icon::render('database', 18, 'install-input-icon') ?>
-            <input type="text" id="db_name" name="db_name" value="<?= htmlspecialchars($data['database'] ?? 'asdr_cms', ENT_QUOTES) ?>" required placeholder="asdr_cms">
+            <input type="text" id="db_name" name="db_name" value="<?= htmlspecialchars($data['database'] ?? 'doublea_cms', ENT_QUOTES) ?>" required placeholder="doublea_cms">
         </div>
     </div>
 

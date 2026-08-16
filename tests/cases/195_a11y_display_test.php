@@ -81,7 +81,7 @@ test('Кириллица: узбекская латиница переводит
 
 test('Кириллица: адреса, почта и сущности остаются латиницей', function () {
     assert_same('info@asr.uz', UzCyrillic::text('info@asr.uz'));
-    assert_same('https://artstudio.uz/uz', UzCyrillic::text('https://artstudio.uz/uz'));
+    assert_same('https://doublea.uz/uz', UzCyrillic::text('https://doublea.uz/uz'));
     assert_contains('&nbsp;', UzCyrillic::text('matn&nbsp;matn'));
     assert_same('матн&#x27;матн', UzCyrillic::text('matn&#x27;matn'));
     assert_same('tel:+998711234567', UzCyrillic::text('tel:+998711234567'));

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * Воркер очереди вебхуков ArtStudio CMS (задача 136).
+ * Воркер очереди вебхуков DoubleA (задача 136).
  *   php app/Console/webhook_worker.php
  *
  * Запускать по Cron (например, каждую минуту):

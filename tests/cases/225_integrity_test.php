@@ -10,7 +10,7 @@ use App\Core\Integrity;
 /** Временный «сайт» с парой файлов; корень подменяется через useRoot. */
 function integrity_fixture(): string
 {
-    $root = sys_get_temp_dir() . '/asdr_integrity_' . bin2hex(random_bytes(6));
+    $root = sys_get_temp_dir() . '/doublea_integrity_' . bin2hex(random_bytes(6));
     mkdir($root . '/app/Core', 0775, true);
     mkdir($root . '/public/uploads/public', 0775, true);
     mkdir($root . '/templates', 0775, true);

@@ -79,7 +79,7 @@ final class Backup
 
             // 3. Манифест.
             $zip->addFromString('manifest.txt', sprintf(
-                "ASDR CMS backup\nDate: %s\nApp URL: %s\n",
+                "DoubleA backup\nDate: %s\nApp URL: %s\n",
                 date('c'),
                 (string) Config::get('app.url', '')
             ));
@@ -360,7 +360,7 @@ final class Backup
         }
 
         // 2. Распаковка во временный каталог.
-        $tmp = sys_get_temp_dir() . '/artstudio_restore_' . bin2hex(random_bytes(6));
+        $tmp = sys_get_temp_dir() . '/doublea_restore_' . bin2hex(random_bytes(6));
         if (!mkdir($tmp, 0700, true)) {
             throw new \RuntimeException('Не удалось создать временный каталог распаковки.');
         }
@@ -494,7 +494,7 @@ final class Backup
      */
     public static function dumpDatabase(): string
     {
-        $path = tempnam(sys_get_temp_dir(), 'asdr-dump-');
+        $path = tempnam(sys_get_temp_dir(), 'doublea-dump-');
         if ($path === false) {
             throw new \RuntimeException('Не удалось создать временный файл дампа.');
         }
@@ -537,7 +537,7 @@ final class Backup
                 $pdo->beginTransaction();
             }
 
-            self::writeDump($handle, "-- ArtStudio CMS database dump\n-- " . date('c') . "\n\n");
+            self::writeDump($handle, "-- DoubleA database dump\n-- " . date('c') . "\n\n");
             self::writeDump($handle, "SET NAMES utf8mb4;\nSET FOREIGN_KEY_CHECKS = 0;\n\n");
 
             $tables = $pdo->query('SHOW TABLES')->fetchAll(PDO::FETCH_COLUMN);

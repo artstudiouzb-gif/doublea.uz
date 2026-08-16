@@ -8,7 +8,7 @@ use App\Core\Media;
 /** @return string */
 function batch_optimizer_temp_dir(): string
 {
-    $dir = sys_get_temp_dir() . '/artstudio-webp-' . bin2hex(random_bytes(4));
+    $dir = sys_get_temp_dir() . '/doublea-webp-' . bin2hex(random_bytes(4));
     mkdir($dir, 0777, true);
 
     return $dir;

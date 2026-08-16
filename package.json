@@ -1,5 +1,5 @@
 {
-  "name": "asdr-browser-tests",
+  "name": "doublea-browser-tests",
   "private": true,
   "scripts": {
     "build:vendor": "node scripts/sync-vendor-assets.mjs",

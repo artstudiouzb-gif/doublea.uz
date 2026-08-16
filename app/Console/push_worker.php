@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * Воркер webpush-рассылки ArtStudio CMS.
+ * Воркер webpush-рассылки DoubleA.
  *   php app/Console/push_worker.php
  *
  * Запускать по Cron рядом с social_worker (например, раз в 5 минут):

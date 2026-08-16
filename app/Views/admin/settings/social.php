@@ -23,7 +23,7 @@ $fieldLabels = [
 ];
 $signatureHints = [
     'telegram' => 'Допустима HTML-разметка Telegram: &lt;b&gt;, &lt;i&gt;, &lt;a href="…"&gt;, &lt;blockquote expandable&gt;, &lt;tg-spoiler&gt;, &lt;code&gt;. '
-        . 'Например: &lt;a href="https://artstudio.uz"&gt;Сайт&lt;/a&gt; | &lt;a href="https://facebook.com/…"&gt;Facebook&lt;/a&gt;',
+        . 'Например: &lt;a href="https://doublea.uz"&gt;Сайт&lt;/a&gt; | &lt;a href="https://facebook.com/…"&gt;Facebook&lt;/a&gt;',
     'facebook' => 'Только обычный текст — HTML не поддерживается. Ссылки пишите голыми URL, Facebook сам сделает их кликабельными.',
     'linkedin' => 'Только обычный текст — HTML не поддерживается. Ссылки пишите голыми URL, LinkedIn сам сделает их кликабельными.',
     'instagram' => 'Только обычный текст. Ссылки в подписи Instagram НЕ кликабельны — здесь имеют смысл хештеги и @упоминания.',

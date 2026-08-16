@@ -199,7 +199,7 @@
         var panels = tabs.map(function (tab) {
             return document.getElementById(tab.getAttribute('data-tab-target'));
         }).filter(Boolean);
-        var storageKey = 'artstudio:design-active-tab';
+        var storageKey = 'doublea:design-active-tab';
 
         function activateTab(tab, shouldFocus, shouldPersist) {
             if (!tab) { return; }
@@ -2298,7 +2298,7 @@
             var tab = e.target.closest('[data-menu-lang-tab]');
             if (tab) {
                 var code = tab.getAttribute('data-menu-lang-tab');
-                try { localStorage.setItem('artstudio:admin-menu-lang', code); } catch (err) {}
+                try { localStorage.setItem('doublea:admin-menu-lang', code); } catch (err) {}
                 document.querySelectorAll('[data-menu-lang-tab]').forEach(function (button) {
                     var active = button === tab;
                     button.classList.toggle('is-active', active);
@@ -2320,7 +2320,7 @@
         try {
             var query = new URLSearchParams(window.location.search);
             var queryLang = query.get('lang');
-            var savedMenuLang = localStorage.getItem('artstudio:admin-menu-lang');
+            var savedMenuLang = localStorage.getItem('doublea:admin-menu-lang');
             var preferredLang = queryLang || savedMenuLang;
             if (preferredLang !== null) {
                 var savedTab = Array.prototype.find.call(document.querySelectorAll('[data-menu-lang-tab]'), function (button) {
@@ -2787,13 +2787,13 @@
     var currentUrl = new URL(window.location.href);
     var savedDraft = currentUrl.searchParams.get('draft_saved');
     if (savedDraft) {
-        try { localStorage.removeItem('artstudio:draft:' + savedDraft); } catch (e) {}
+        try { localStorage.removeItem('doublea:draft:' + savedDraft); } catch (e) {}
         currentUrl.searchParams.delete('draft_saved');
         window.history.replaceState({}, document.title, currentUrl.pathname + currentUrl.search + currentUrl.hash);
     }
 
     document.querySelectorAll('form[data-content-draft]').forEach(function (form) {
-        var key = 'artstudio:draft:' + form.getAttribute('data-content-draft');
+        var key = 'doublea:draft:' + form.getAttribute('data-content-draft');
         var dirty = false;
 
         function fields() {

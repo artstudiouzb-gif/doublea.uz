@@ -28,7 +28,7 @@ final class LegacyCmsImporter
 
     /**
      * @param array{limit?:int,perPage?:int,status?:string,authorId?:?int,dryRun?:bool,langs?:array<string,string>} $opts
-     *   langs — карта «код языка источника => код языка ArtStudio», первый = основной
+     *   langs — карта «код языка источника => код языка DoubleA», первый = основной
      *   (в него пишется базовая строка новости, остальные — переводы). Пусто —
      *   одноязычный импорт.
      * @return array{imported:int,skipped:int,images:int,redirects:int,translations:int,errors:array<int,string>}
@@ -213,7 +213,7 @@ final class LegacyCmsImporter
     }
 
     /**
-     * Преобразует пост WP REST в поля новости ArtStudio.
+     * Преобразует пост WP REST в поля новости DoubleA.
      *
      * @param array<string,mixed> $post
      * @return array{title:string,slug:string,excerpt:string,content:string,published_at:string,featured_url:string,link:string}
@@ -390,7 +390,7 @@ final class LegacyCmsImporter
     {
         $response = Http::getSafeRemote(
             $url,
-            ['User-Agent: ArtStudio-Legacy-Import/1.0'],
+            ['User-Agent: DoubleA-Legacy-Import/1.0'],
             60,
             20 * 1024 * 1024
         );

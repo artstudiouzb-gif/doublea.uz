@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * CLI-система миграций ArtStudio CMS.
+ * CLI-система миграций DoubleA.
  *
  *   php database/migrate.php            — накатить все новые миграции
  *   php database/migrate.php status     — показать статус (применённые/новые)

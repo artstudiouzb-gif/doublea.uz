@@ -14,7 +14,7 @@ function ensure_redirects_table(): void
 
 test('Redirect::normalizePath: полный URL, query, хвостовые «/», запрет корня и /admin', function () {
     assert_same('/old-page', Redirect::normalizePath('/old-page'));
-    assert_same('/old-page', Redirect::normalizePath('https://asdr.gov.uz/old-page?utm=1#top'));
+    assert_same('/old-page', Redirect::normalizePath('https://legacy.example.uz/old-page?utm=1#top'));
     assert_same('/a/b', Redirect::normalizePath('/a/b/'));
     assert_same('/old', Redirect::normalizePath('old'));
     assert_same(null, Redirect::normalizePath(''));
@@ -39,7 +39,7 @@ test('Redirect::buildTarget переносит query-строку; parseImportLi
 
     assert_same(['/old', '/new', 301], Redirect::parseImportLine('/old /new'));
     assert_same(['/old', '/new', 302], Redirect::parseImportLine('/old -> /new 302'));
-    assert_same(['/page', '/o-nas', 301], Redirect::parseImportLine('https://asdr.gov.uz/page /o-nas'));
+    assert_same(['/page', '/o-nas', 301], Redirect::parseImportLine('https://legacy.example.uz/page /o-nas'));
     assert_same(null, Redirect::parseImportLine('# комментарий'));
     assert_same(null, Redirect::parseImportLine('/only-one'));
     assert_same(null, Redirect::parseImportLine('/same /same'));

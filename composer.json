@@ -1,6 +1,6 @@
 {
-    "name": "asdr/cms",
-    "description": "ASDR CMS - Agency for Strategic Development and Reform",
+    "name": "doublea/site",
+    "description": "DoubleA website and content management platform",
     "type": "project",
     "license": "proprietary",
     "require": {},

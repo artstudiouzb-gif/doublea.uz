@@ -4,10 +4,10 @@ use App\Core\SocialEmbed;
 
 test("SocialEmbed::transform преобразует ссылки Telegram, Instagram, Facebook и YouTube в интерактивные блоки", function () {
     // 1. Telegram посты
-    $tg = "<p>https://t.me/artstudio_uz/123</p>";
+    $tg = "<p>https://t.me/doublea_uz/123</p>";
     $outTg = SocialEmbed::transform($tg);
     assert_contains("social-embed--telegram", $outTg);
-    assert_contains("data-telegram-post=\"artstudio_uz/123\"", $outTg);
+    assert_contains("data-telegram-post=\"doublea_uz/123\"", $outTg);
 
     // 2. Instagram посты и Reels
     $ig = "<p>https://www.instagram.com/p/C_abc123/</p>";

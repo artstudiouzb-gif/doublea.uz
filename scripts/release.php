@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Безопасная последовательность выпуска ПОСЛЕ загрузки новой версии кода.
  * Код/ветку скрипт не скачивает и не меняет.
  *
- *   php scripts/release.php https://artstudio.uz
+ *   php scripts/release.php https://doublea.uz
  */
 
 require __DIR__ . '/../app/Core/Cli.php';

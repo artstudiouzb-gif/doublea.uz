@@ -420,7 +420,7 @@ final class AdminUi
      */
     public static function seoPreviewBox(array $data = []): string
     {
-        $siteName = htmlspecialchars(\App\Models\Setting::get('site_name', 'ASDR CMS'), ENT_QUOTES);
+        $siteName = htmlspecialchars(\App\Models\Setting::get('site_name', 'DoubleA'), ENT_QUOTES);
         $baseUrl = \App\Core\AppUrl::base();
         $domain = parse_url($baseUrl, PHP_URL_HOST) ?: 'agency.gov.uz';
 

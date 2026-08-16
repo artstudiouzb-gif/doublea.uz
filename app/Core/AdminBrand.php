@@ -9,11 +9,11 @@ use App\Models\Setting;
 /**
  * White-label панели управления: название, логотип и акцентный цвет админки
  * задаются в «Настройках» и применяются в topbar, <title> и на страницах
- * входа. Пустые значения означают стандартный брендинг ArtStudio.
+ * входа. Пустые значения означают стандартный брендинг DoubleA.
  */
 final class AdminBrand
 {
-    public const DEFAULT_NAME = 'ASDR';
+    public const DEFAULT_NAME = 'DoubleA';
     public const DEFAULT_ACCENT = '#2271b1';
 
     /** Название панели для topbar и <title>. */

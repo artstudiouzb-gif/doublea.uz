@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * Нативный тест-раннер ArtStudio CMS (без Composer/PHPUnit — по требованию
+ * Нативный тест-раннер DoubleA (без Composer/PHPUnit — по требованию
  * «никаких сторонних библиотек/Composer»).
  *
  *   php tests/run.php

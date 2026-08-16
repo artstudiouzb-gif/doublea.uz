@@ -112,7 +112,7 @@ $navBrandSubtitle = $navBrandHost !== '' ? $navBrandHost : t('Панель уп�
 <?= \App\Core\AdminBrand::faviconHtml() ?>
 <script nonce="<?= \App\Core\SecurityHeaders::nonce() ?>">
 try {
-    if (localStorage.getItem('artstudio:admin-sidebar-collapsed') === '1') {
+    if (localStorage.getItem('doublea:admin-sidebar-collapsed') === '1') {
         document.documentElement.classList.add('admin-nav-collapsed');
     }
 } catch (e) {}

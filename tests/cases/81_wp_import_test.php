@@ -49,9 +49,9 @@ test('extractImageUrls находит все картинки, rewriteImages з�
 });
 
 test('normalizeImageUrl снимает Jetpack Photon и query, возвращая оригинал', function () {
-    $src = 'https://i0.wp.com/asdr.gov.uz/wp-content/uploads/2026/07/2.jpg?resize=351%2C234&#038;ssl=1';
-    assert_same('https://asdr.gov.uz/wp-content/uploads/2026/07/2.jpg', LegacyCmsImporter::normalizeImageUrl($src), 'Photon-обёртка и query сняты');
-    $clean = 'https://asdr.gov.uz/wp-content/uploads/2026/07/1-scaled.jpg';
+    $src = 'https://i0.wp.com/legacy.example.uz/wp-content/uploads/2026/07/2.jpg?resize=351%2C234&#038;ssl=1';
+    assert_same('https://legacy.example.uz/wp-content/uploads/2026/07/2.jpg', LegacyCmsImporter::normalizeImageUrl($src), 'Photon-обёртка и query сняты');
+    $clean = 'https://legacy.example.uz/wp-content/uploads/2026/07/1-scaled.jpg';
     assert_same($clean, LegacyCmsImporter::normalizeImageUrl($clean), 'чистый URL не изменяется');
 });
 

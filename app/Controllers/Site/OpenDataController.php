@@ -35,7 +35,7 @@ final class OpenDataController
         }
 
         $this->respond([
-            'generator' => 'ASDR CMS Open Data',
+            'generator' => 'DoubleA Open Data',
             'version' => '1.0',
             'generated_at' => gmdate('c'),
             'datasets' => $datasets,

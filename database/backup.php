@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * CLI-бэкап ArtStudio CMS.
+ * CLI-бэкап DoubleA.
  *   php database/backup.php
  * Создаёт storage/backups/backup_YYYY-MM-DD_HHMMSS.zip (дамп БД + загрузки).
  */

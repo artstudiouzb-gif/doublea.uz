@@ -429,7 +429,7 @@ final class TelegramController
         foreach ($ids as $chatId) {
             if (TelegramBot::sendMessage(
                 $chatId,
-                '<b>Проверка уведомлений ASDR CMS</b>' . "\n\n"
+                '<b>Проверка уведомлений DoubleA</b>' . "\n\n"
                 . 'Соединение с Telegram работает. Этот chat_id готов получать заявки с сайта.'
             )) {
                 $sent++;

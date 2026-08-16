@@ -1,6 +1,6 @@
 # Деплой и чек-лист первого релиза
 
-ArtStudio CMS — чистый PHP 8.2+ / MySQL(MariaDB), без Composer и npm на
+DoubleA — чистый PHP 8.2+ / MySQL(MariaDB), без Composer и npm на
 production. Эти инструменты используются только для проверок разработки и CI.
 Ниже — минимальные шаги для боевого запуска.
 
@@ -22,7 +22,7 @@ production. Эти инструменты используются только 
 
 ## 3. Установка
 
-1. Скачайте готовый `asdr-cms-*.zip` из GitHub Releases и сверьте его SHA-256
+1. Скачайте готовый `doublea-*.zip` из GitHub Releases и сверьте его SHA-256
    с соседним файлом `.sha256`. Не используйте автоматически создаваемый
    GitHub архив `Source code`: готовый ZIP отдельно проверяется как пакет
    чистой установки.
@@ -106,7 +106,7 @@ shared-хостинге обычно `localhost`. Установщик подк�
 
 ```bash
 php database/restore.php storage/backups/backup_2026-08-01_030000.zip \
-    artstudio_restore_check /tmp/artstudio_restore_files
+    doublea_restore_check /tmp/doublea_restore_files
 ```
 
 После успеха скрипт ставит отметку `storage/backups/.last_restore_check`, а
@@ -180,7 +180,7 @@ php database/doctor.php            # проверить структуру, кл
 Для выпуска после загрузки новой версии используйте fail-fast сценарий:
 
 ```bash
-php scripts/release.php https://artstudio.uz
+php scripts/release.php https://doublea.uz
 ```
 
 Он создаёт резервную копию до миграций, применяет их, очищает кеш и запускает
@@ -212,9 +212,9 @@ php scripts/release.php https://artstudio.uz
 
 | Запись | Имя | Значение (пример) |
 | --- | --- | --- |
-| SPF | `artstudio.uz` | `v=spf1 include:<хост-провайдера> -all` |
-| DKIM | `<селектор>._domainkey.artstudio.uz` | выдаёт почтовый провайдер |
-| DMARC | `_dmarc.artstudio.uz` | `v=DMARC1; p=quarantine; rua=mailto:postmaster@artstudio.uz` |
+| SPF | `doublea.uz` | `v=spf1 include:<хост-провайдера> -all` |
+| DKIM | `<селектор>._domainkey.doublea.uz` | выдаёт почтовый провайдер |
+| DMARC | `_dmarc.doublea.uz` | `v=DMARC1; p=quarantine; rua=mailto:postmaster@doublea.uz` |
 
 Точное значение `include:` для SPF и содержимое DKIM берутся в панели
 почтового провайдера (cPanel → Email Deliverability показывает обе записи

@@ -66,7 +66,7 @@ final class WebhookDispatcher
         }
 
         $body = (string) $delivery['payload_json'];
-        $headers = ['Content-Type: application/json', 'User-Agent: ASDR-CMS-Webhook'];
+        $headers = ['Content-Type: application/json', 'User-Agent: DoubleA-Webhook'];
         if (!empty($webhook['secret'])) {
             $headers[] = self::SIGNATURE_HEADER . ': ' . self::sign($body, (string) $webhook['secret']);
         }
@@ -151,7 +151,7 @@ final class WebhookDispatcher
             'timestamp' => gmdate('c'),
             'data' => [
                 'configured_event' => (string) ($webhook['event_type'] ?? ''),
-                'message' => 'Проверка подключения ASDR CMS',
+                'message' => 'Проверка подключения DoubleA',
             ],
         ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 

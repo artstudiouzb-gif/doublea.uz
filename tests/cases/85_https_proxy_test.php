@@ -19,10 +19,10 @@ test('Внешний HTTPS корректно определяется за до
         $_SERVER['HTTPS'] = 'off';
         $_SERVER['SERVER_PORT'] = '80';
         $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https, http';
-        $_SERVER['HTTP_HOST'] = 'ArtStudio.UZ';
+        $_SERVER['HTTP_HOST'] = 'DoubleA.UZ';
 
         assert_true(RequestUrl::isHttps());
-        assert_same('https://artstudio.uz', RequestUrl::origin());
+        assert_same('https://doublea.uz', RequestUrl::origin());
     } finally {
         $_SERVER = $server;
         Config::merge(['security' => $security]);
@@ -42,10 +42,10 @@ test('Поддельный X-Forwarded-Proto от прямого клиента 
         $_SERVER['HTTPS'] = 'off';
         $_SERVER['SERVER_PORT'] = '80';
         $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
-        $_SERVER['HTTP_HOST'] = 'artstudio.uz';
+        $_SERVER['HTTP_HOST'] = 'doublea.uz';
 
         assert_false(RequestUrl::isHttps(), 'клиент не может выдать HTTP за HTTPS');
-        assert_same('http://artstudio.uz', RequestUrl::origin());
+        assert_same('http://doublea.uz', RequestUrl::origin());
     } finally {
         $_SERVER = $server;
         Config::merge(['security' => $security]);
@@ -56,7 +56,7 @@ test('Некорректный Host не попадает в сгенериро�
     $server = $_SERVER;
 
     try {
-        $_SERVER['HTTP_HOST'] = "artstudio.uz\r\nX-Injected: yes";
+        $_SERVER['HTTP_HOST'] = "doublea.uz\r\nX-Injected: yes";
         unset($_SERVER['HTTPS'], $_SERVER['HTTP_X_FORWARDED_PROTO']);
 
         assert_same('http://localhost', RequestUrl::origin());
@@ -67,12 +67,12 @@ test('Некорректный Host не попадает в сгенериро�
 
 test('Канонический URL повышает http до https без смены настроенного host', function () {
     assert_same(
-        'https://artstudio.uz/cms',
-        AppUrl::normalize('http://artstudio.uz/cms/', true)
+        'https://doublea.uz/cms',
+        AppUrl::normalize('http://doublea.uz/cms/', true)
     );
     assert_same(
-        'http://artstudio.uz',
-        AppUrl::normalize('http://artstudio.uz/', false)
+        'http://doublea.uz',
+        AppUrl::normalize('http://doublea.uz/', false)
     );
 });
 

@@ -24,7 +24,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-          MYSQL_DATABASE: asdr_release
+          MYSQL_DATABASE: doublea_release
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
@@ -45,12 +45,12 @@ jobs:
         env:
           TEST_DB_HOST: 127.0.0.1
           TEST_DB_PORT: '3306'
-          TEST_DB_DATABASE: asdr_release
+          TEST_DB_DATABASE: doublea_release
           TEST_DB_USERNAME: root
           TEST_DB_PASSWORD: ''
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          php tests/load_schema.php asdr_release
+          php tests/load_schema.php doublea_release
           find . -path ./vendor -prune -o -name '*.php' -print0 \
             | xargs -0 -n1 -P4 php -l >/dev/null
           php tests/run.php
@@ -70,9 +70,9 @@ jobs:
             release_name="$(git rev-parse --short=12 HEAD)"
           fi
           safe_name="$(printf '%s' "${release_name}" | tr -c 'A-Za-z0-9._-' '-')"
-          archive="asdr-cms-${safe_name}.zip"
+          archive="doublea-${safe_name}.zip"
           mkdir -p dist verify-package
-          git archive --format=zip --prefix=asdr-cms/ --output="dist/${archive}" HEAD
+          git archive --format=zip --prefix=doublea/ --output="dist/${archive}" HEAD
           unzip -q "dist/${archive}" -d verify-package
 
           for required in \
@@ -89,7 +89,7 @@ jobs:
             storage/backups/.gitkeep \
             storage/protected_uploads/.gitkeep \
             docs/DEPLOY.md; do
-            test -f "verify-package/asdr-cms/${required}"
+            test -f "verify-package/doublea/${required}"
           done
 
           for forbidden in \
@@ -101,7 +101,7 @@ jobs:
             package.json \
             node_modules \
             vendor; do
-            test ! -e "verify-package/asdr-cms/${forbidden}"
+            test ! -e "verify-package/doublea/${forbidden}"
           done
 
           (cd dist && sha256sum "${archive}" > "${archive}.sha256")
@@ -111,7 +111,7 @@ jobs:
       - name: Upload verified package
         uses: actions/upload-artifact@v7
         with:
-          name: asdr-cms-${{ steps.package.outputs.release_name }}
+          name: doublea-${{ steps.package.outputs.release_name }}
           path: |
             dist/${{ steps.package.outputs.archive }}
             dist/${{ steps.package.outputs.archive }}.sha256
@@ -128,4 +128,4 @@ jobs:
             "dist/${ARCHIVE}.sha256" \
             --verify-tag \
             --generate-notes \
-            --title "ASDR CMS ${GITHUB_REF_NAME}"
+            --title "DoubleA ${GITHUB_REF_NAME}"

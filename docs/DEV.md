@@ -1,6 +1,6 @@
-# Developer Guide (DEV.md) — ArtStudio CMS (asdr)
+# Developer Guide (DEV.md) — DoubleA
 
-Welcome to the **ArtStudio CMS** developer documentation. This guide details how to set up your local development environment, run test suites, inspect static analysis, and extend CMS functionality (such as adding new block types).
+Welcome to the **DoubleA** developer documentation. This guide details how to set up your local development environment, run test suites, inspect static analysis, and extend CMS functionality (such as adding new block types).
 
 ---
 
@@ -14,8 +14,8 @@ Welcome to the **ArtStudio CMS** developer documentation. This guide details how
 ### Installation & Launch
 1. Clone the repository into your local server environment:
    ```bash
-   git clone https://github.com/artstudiouzb-gif/asdr.git
-   cd asdr
+   git clone https://github.com/artstudiouzb-gif/doublea.uz.git
+   cd doublea.uz
    ```
 2. Point your local web server (Nginx, Apache, or OpenServer) document root to the `public/` folder.
 3. Open `http://localhost` or your local domain. The interactive 4-step web installer will launch automatically if `config.php` does not exist.
@@ -38,7 +38,7 @@ Shortcut commands are configured via `composer.json` and `Makefile`:
 ### Running Tests with MySQL / MariaDB
 By default, unit tests use an isolated test environment. To run DB-dependent integration tests:
 ```bash
-TEST_DB_HOST=127.0.0.1 TEST_DB_PORT=3306 TEST_DB_DATABASE=test_asdr_ci TEST_DB_USERNAME=root TEST_DB_PASSWORD= php tests/run.php
+TEST_DB_HOST=127.0.0.1 TEST_DB_PORT=3306 TEST_DB_DATABASE=test_doublea_ci TEST_DB_USERNAME=root TEST_DB_PASSWORD= php tests/run.php
 ```
 
 ---
@@ -46,7 +46,7 @@ TEST_DB_HOST=127.0.0.1 TEST_DB_PORT=3306 TEST_DB_DATABASE=test_asdr_ci TEST_DB_U
 ## 3. Architecture & Code Structure
 
 ```text
-asdr/
+doublea.uz/
 ├── app/
 │   ├── Controllers/   # Admin and Site controllers (PageController, NewsController, etc.)
 │   ├── Core/          # Base components (Router, Cache, View, Locale, AdminUi, SecretBox)
@@ -66,7 +66,7 @@ asdr/
 Page blocks are modular components rendered via `BlockRenderer`. To add a new block type (e.g. `event_grid`):
 
 ### Step 1: Register in `BlockTypeRegistry`
-Open [app/Core/BlockTypeRegistry.php](file:///C:/Users/Ulugbek/Documents/Codex/2026-07-26/new-chat/work/asdr/app/Core/BlockTypeRegistry.php) and add the new type definition:
+Open [app/Core/BlockTypeRegistry.php](file:///C:/Users/Ulugbek/Documents/Codex/2026-07-26/new-chat/work/doublea.uz/app/Core/BlockTypeRegistry.php) and add the new type definition:
 ```php
 public const TYPES = [
     // ...

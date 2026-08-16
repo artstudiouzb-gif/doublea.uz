@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * Read-only диагностика установленной базы ASDR CMS.
+ * Read-only диагностика установленной базы DoubleA.
  *
  *   php database/doctor.php
  *
@@ -100,7 +100,7 @@ $expectedTables = array_values(array_unique($expectedTables));
 
 $databaseName = (string) $pdo->query('SELECT DATABASE()')->fetchColumn();
 $serverVersion = (string) $pdo->query('SELECT VERSION()')->fetchColumn();
-fwrite(STDOUT, "ASDR DB Doctor — {$databaseName} ({$serverVersion})\n\n");
+fwrite(STDOUT, "DoubleA DB Doctor — {$databaseName} ({$serverVersion})\n\n");
 
 $tableRows = $pdo->prepare(
     "SELECT TABLE_NAME, ENGINE, TABLE_COLLATION

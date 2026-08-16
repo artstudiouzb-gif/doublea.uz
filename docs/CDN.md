@@ -45,7 +45,7 @@ URL версионированных ассетов формирует `App\Core
 файлы с origin (этого сайта) и раздаёт со своего хоста — домен трогать не нужно.
 
 1. **Создайте Pull Zone** в BunnyCDN: Origin URL = `https://<ваш-домен>`
-   (например `https://artstudio.uz`). Bunny выдаст хост вида
+   (например `https://doublea.uz`). Bunny выдаст хост вида
    `yourzone.b-cdn.net`.
 2. **Впишите хост** в админке: *Производительность → CDN для статики и
    загрузок → Базовый URL CDN* = `https://yourzone.b-cdn.net`.

@@ -1,0 +1,20 @@
+name: Legacy brand audit
+
+on:
+  push:
+    branches:
+      - chore/remove-legacy-cms-branding
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Find legacy branding
+        shell: bash
+        run: |
+          echo '=== Legacy branding matches ==='
+          grep -RInE --exclude-dir=.git --exclude='legacy-brand-audit.yml' '(ArtStudio|artstudio|ASDR|asdr)' . || true

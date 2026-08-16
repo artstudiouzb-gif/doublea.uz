@@ -195,8 +195,7 @@ jobs:
         shell: bash
         run: |
           set -e
-          git rm -f --ignore-unmatch .github/workflows/legacy-brand-audit.yml .github/workflows/legacy-brand-cleanup.yml
-          if grep -RInE --exclude-dir=.git '(ArtStudio|artstudio[.:_/-]|ASDR CMS|asdr-browser-tests|https://asdr\.gov\.uz)' .; then
+          if grep -RInE --exclude-dir=.git --exclude=legacy-brand-audit.yml --exclude=legacy-brand-cleanup.yml '(ArtStudio|artstudio[.:_/-]|ASDR CMS|asdr-browser-tests|https://asdr\.gov\.uz)' .; then
             echo 'Former branding still present.' >&2
             exit 1
           fi

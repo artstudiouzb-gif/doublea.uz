@@ -1,0 +1,520 @@
+/* Настройки отображения («для слабовидящих»).
+   Состояние — атрибуты на <html>: data-a11y-size (100…200), data-a11y-contrast
+   (mono|warm), data-a11y-font (readable|serif), data-a11y-spacing (wide|wider),
+   data-a11y-images="off", data-a11y-motion="off", data-a11y-links="underline",
+   data-a11y-reading="on". Значения по умолчанию в разметку не попадают, поэтому
+   обычная страница остаётся обычной: этот файл ничего не делает, пока посетитель
+   ничего не включил. */
+
+/* ===== Размер текста ===== */
+/* Размеры сайта заданы в rem, поэтому базовый кегль масштабирует всю типографику. */
+html[data-a11y-size="110"] { font-size: 110%; }
+html[data-a11y-size="120"] { font-size: 120%; }
+html[data-a11y-size="130"] { font-size: 130%; }
+html[data-a11y-size="140"] { font-size: 140%; }
+html[data-a11y-size="150"] { font-size: 150%; }
+html[data-a11y-size="160"] { font-size: 160%; }
+html[data-a11y-size="170"] { font-size: 170%; }
+html[data-a11y-size="180"] { font-size: 180%; }
+html[data-a11y-size="190"] { font-size: 190%; }
+html[data-a11y-size="200"] { font-size: 200%; }
+
+/* Крупный текст быстро упирается в фиксированные высоты — снимаем ограничения
+   у типовых «обрезающих» мест, иначе строки наезжают друг на друга. */
+html[data-a11y-size]:not([data-a11y-size="100"]) .site-header,
+html[data-a11y-size]:not([data-a11y-size="100"]) .site-header__row,
+html[data-a11y-size]:not([data-a11y-size="100"]) .site-menu__link,
+html[data-a11y-size]:not([data-a11y-size="100"]) .btn,
+html[data-a11y-size]:not([data-a11y-size="100"]) .block-hero__button {
+    height: auto;
+    min-height: 0;
+    line-height: 1.4;
+}
+html[data-a11y-size]:not([data-a11y-size="100"]) [class*="__title"],
+html[data-a11y-size]:not([data-a11y-size="100"]) [class*="__text"],
+html[data-a11y-size]:not([data-a11y-size="100"]) [class*="__excerpt"],
+html[data-a11y-size]:not([data-a11y-size="100"]) [class*="__lead"] {
+    /* Многострочные обрезки прячут текст ровно тогда, когда он стал крупнее. */
+    -webkit-line-clamp: unset;
+    max-height: none;
+    overflow: visible;
+}
+
+/* От 140% двухколоночные шапки материалов складываются в одну колонку:
+   иначе заголовок переносится по два-три слова в строке. */
+html[data-a11y-size="140"] .newsdetail-head,
+html[data-a11y-size="150"] .newsdetail-head,
+html[data-a11y-size="160"] .newsdetail-head,
+html[data-a11y-size="170"] .newsdetail-head,
+html[data-a11y-size="180"] .newsdetail-head,
+html[data-a11y-size="190"] .newsdetail-head,
+html[data-a11y-size="200"] .newsdetail-head,
+html[data-a11y-size="140"] .newsdetail-body,
+html[data-a11y-size="150"] .newsdetail-body,
+html[data-a11y-size="160"] .newsdetail-body,
+html[data-a11y-size="170"] .newsdetail-body,
+html[data-a11y-size="180"] .newsdetail-body,
+html[data-a11y-size="190"] .newsdetail-body,
+html[data-a11y-size="200"] .newsdetail-body,
+html[data-a11y-size="140"] .layout,
+html[data-a11y-size="150"] .layout,
+html[data-a11y-size="160"] .layout,
+html[data-a11y-size="170"] .layout,
+html[data-a11y-size="180"] .layout,
+html[data-a11y-size="190"] .layout,
+html[data-a11y-size="200"] .layout {
+    display: block;
+}
+
+/* ===== Интервалы (WCAG 1.4.12) ===== */
+html[data-a11y-spacing="wide"] { --a11y-line: 1.85; --a11y-letter: .02em; --a11y-word: .08em; --a11y-para: 1.3em; }
+html[data-a11y-spacing="wider"] { --a11y-line: 2.1; --a11y-letter: .06em; --a11y-word: .18em; --a11y-para: 1.8em; }
+html[data-a11y-spacing] body {
+    line-height: var(--a11y-line);
+    letter-spacing: var(--a11y-letter);
+    word-spacing: var(--a11y-word);
+}
+html[data-a11y-spacing] p,
+html[data-a11y-spacing] li {
+    margin-bottom: var(--a11y-para);
+}
+html[data-a11y-spacing] h1,
+html[data-a11y-spacing] h2,
+html[data-a11y-spacing] h3 {
+    line-height: 1.3;
+}
+
+/* ===== Шрифт ===== */
+/* Только системные семейства: сторонние файлы шрифтов грузить не нужно. */
+html[data-a11y-font="readable"] body,
+html[data-a11y-font="readable"] button,
+html[data-a11y-font="readable"] input,
+html[data-a11y-font="readable"] select,
+html[data-a11y-font="readable"] textarea {
+    font-family: Verdana, Tahoma, "DejaVu Sans", "Segoe UI", system-ui, sans-serif;
+}
+html[data-a11y-font="serif"] body,
+html[data-a11y-font="serif"] button,
+html[data-a11y-font="serif"] input,
+html[data-a11y-font="serif"] select,
+html[data-a11y-font="serif"] textarea {
+    font-family: Georgia, "Times New Roman", "Liberation Serif", serif;
+}
+html[data-a11y-font] body * {
+    font-family: inherit;
+}
+
+/* ===== Контраст ===== */
+/* Тёплый фон: те же переменные темы, поэтому карточки, тени и границы
+   остаются согласованными — меняется только подложка и насыщенность текста. */
+html[data-a11y-contrast="warm"] {
+    --bg-primary: #fbf3e4;
+    --bg-surface: #f5e9d2;
+    --text-main: #2b2113;
+    --text-muted: #4d3d24;
+    --border-color: #d9c7a4;
+}
+html[data-a11y-contrast="warm"] body {
+    background: var(--bg-primary);
+    color: var(--text-main);
+}
+
+/* Чёрно-белый: единственный режим, который намеренно ломает оформление —
+   он для тех, кому цветной сайт нечитаем. Отсюда высокая специфичность. */
+html[data-a11y-contrast="mono"] {
+    --a11y-bg: #ffffff;
+    --a11y-fg: #000000;
+    --a11y-accent: #00309e;
+    --bg-primary: #ffffff;
+    --bg-surface: #ffffff;
+    --text-main: #000000;
+    --text-muted: #000000;
+    --border-color: #000000;
+}
+html[data-a11y-contrast="mono"],
+html[data-a11y-contrast="mono"] body,
+html[data-a11y-contrast="mono"] body * {
+    background-image: none !important;
+    background-color: transparent !important;
+    color: var(--a11y-fg) !important;
+    border-color: var(--a11y-fg) !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+html[data-a11y-contrast="mono"] body,
+html[data-a11y-contrast="mono"] .site-header,
+html[data-a11y-contrast="mono"] .site-footer,
+html[data-a11y-contrast="mono"] .a11y-drawer {
+    background-color: var(--a11y-bg) !important;
+}
+html[data-a11y-contrast="mono"] a,
+html[data-a11y-contrast="mono"] a * {
+    color: var(--a11y-accent) !important;
+    text-decoration: underline !important;
+}
+html[data-a11y-contrast="mono"] button,
+html[data-a11y-contrast="mono"] .btn,
+html[data-a11y-contrast="mono"] input,
+html[data-a11y-contrast="mono"] select,
+html[data-a11y-contrast="mono"] textarea {
+    border: 2px solid var(--a11y-fg) !important;
+    border-radius: 6px !important;
+}
+html[data-a11y-contrast="mono"] [aria-pressed="true"] {
+    background-color: var(--a11y-fg) !important;
+    color: var(--a11y-bg) !important;
+}
+html[data-a11y-contrast="mono"] [aria-pressed="true"] * {
+    color: var(--a11y-bg) !important;
+}
+
+/* ===== Ссылки ===== */
+html[data-a11y-links="underline"] .site-content a,
+html[data-a11y-links="underline"] .site-footer a,
+html[data-a11y-links="underline"] .site-menu a {
+    text-decoration: underline;
+    text-underline-offset: .18em;
+}
+
+/* ===== Изображения ===== */
+html[data-a11y-images="off"] .site-content img,
+html[data-a11y-images="off"] .site-content picture,
+html[data-a11y-images="off"] .site-content video,
+html[data-a11y-images="off"] .repo-main img,
+html[data-a11y-images="off"] .repo-main picture,
+html[data-a11y-images="off"] .repo-main video {
+    display: none !important;
+}
+html[data-a11y-images="off"] .site-content *,
+html[data-a11y-images="off"] .repo-main * {
+    background-image: none !important;
+}
+
+/* ===== Анимации ===== */
+/* ===== Системная настройка «уменьшить движение» =====
+   Тумблер в панели ниже сбрасывает движение целиком, а системная настройка
+   до этого гасила только появление карточек ([data-reveal], .anim-card).
+   Посетитель, попросивший ОС убрать анимации, всё равно получал подъёмы
+   карточек, сдвиги кнопок и плавные подчёркивания.
+
+   Длительность 0.01ms, а не none: события transitionend/animationend
+   продолжают приходить, если на них когда-нибудь повесят обработчик.
+   Сейчас таких нет, но правило переживёт появление первого. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+html[data-a11y-motion="off"] *,
+html[data-a11y-motion="off"] *::before,
+html[data-a11y-motion="off"] *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+}
+
+/* ===== Режим чтения ===== */
+/* Остаётся текст: одна колонка, узкая мера, без баннеров и декора. */
+html[data-a11y-reading="on"] .block-hero video,
+html[data-a11y-reading="on"] .block-hero__media,
+html[data-a11y-reading="on"] .site-social,
+html[data-a11y-reading="on"] .site-cta,
+html[data-a11y-reading="on"] .scroll-top,
+html[data-a11y-reading="on"] .block-slider,
+html[data-a11y-reading="on"] .layout__sidebar,
+html[data-a11y-reading="on"] .newsdetail-side {
+    display: none !important;
+}
+html[data-a11y-reading="on"] .layout,
+html[data-a11y-reading="on"] .newsdetail-body,
+html[data-a11y-reading="on"] .site-content {
+    display: block !important;
+}
+html[data-a11y-reading="on"] .site-content p,
+html[data-a11y-reading="on"] .site-content li,
+html[data-a11y-reading="on"] .site-content h1,
+html[data-a11y-reading="on"] .site-content h2,
+html[data-a11y-reading="on"] .site-content h3 {
+    max-width: 68ch;
+}
+html[data-a11y-reading="on"] .cms-block {
+    padding-block: 18px !important;
+}
+
+/* ===== Кнопка в шапке ===== */
+.a11y-toggle {
+    background: transparent;
+    border: 1px solid currentColor;
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.a11y-toggle.is-active {
+    background: color-mix(in srgb, currentColor 12%, transparent);
+}
+
+/* ===== Выдвижная панель справа ===== */
+.a11y-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    background: rgba(15, 23, 42, .45);
+}
+.a11y-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 901;
+    width: min(380px, 100vw);
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-primary, #fff);
+    color: var(--text-main, #1a1a1a);
+    border-left: 1px solid var(--border-color, #e1e3e8);
+    box-shadow: -18px 0 48px rgba(15, 23, 42, .18);
+    font-size: 15px;
+    line-height: 1.45;
+}
+.a11y-drawer[hidden],
+.a11y-backdrop[hidden] {
+    display: none;
+}
+/* Панель выезжает справа, а не появляется рывком. Открытие анимируется
+   ключевыми кадрами, потому что элемент выходит из display:none и обычный
+   transition на нём не сработал бы. */
+@keyframes a11y-drawer-in {
+    from { transform: translateX(100%); }
+    to { transform: none; }
+}
+@keyframes a11y-backdrop-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.a11y-drawer:not([hidden]) { animation: a11y-drawer-in .28s cubic-bezier(0.16, 1, 0.3, 1); }
+.a11y-backdrop:not([hidden]) { animation: a11y-backdrop-in .28s ease; }
+@media (prefers-reduced-motion: reduce) {
+    .a11y-drawer:not([hidden]),
+    .a11y-backdrop:not([hidden]) { animation: none; }
+}
+
+/* Системная настройка повышенного контраста работает и без открытия панели
+   доступности. Меняем только семантические токены, не ломая тему и бренд. */
+@media (prefers-contrast: more) {
+    :root {
+        --border-color: currentColor;
+        --gov-border: color-mix(in srgb, currentColor 58%, transparent);
+    }
+
+    :where(a, button, input, select, textarea):focus-visible {
+        outline-width: 3px;
+        outline-offset: 3px;
+    }
+}
+
+/* Windows High Contrast заменяет палитру системными цветами. Явные границы
+   сохраняют видимость элементов, которые в обычной теме отделяются тенью. */
+@media (forced-colors: active) {
+    :where(button, .btn, input, select, textarea, [role="button"]) {
+        border: 1px solid ButtonText;
+    }
+
+    :where(a, button, input, select, textarea):focus-visible {
+        outline: 3px solid Highlight;
+        outline-offset: 3px;
+    }
+}
+.a11y-drawer__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border-color, #e1e3e8);
+}
+.a11y-drawer__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: var(--step-0);
+    font-weight: 700;
+}
+.a11y-drawer__close {
+    background: transparent;
+    border: 0;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    color: inherit;
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+.a11y-drawer__close:hover {
+    background: var(--bg-surface, #f4f5f7);
+}
+.a11y-drawer__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 6px 18px 18px;
+}
+.a11y-group {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-color, #e1e3e8);
+}
+.a11y-group:last-child {
+    border-bottom: 0;
+}
+.a11y-group__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+.a11y-group__title {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.a11y-group__head .a11y-group__title {
+    margin-bottom: 0;
+}
+.a11y-group__value {
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+}
+.a11y-group__hint {
+    margin: 10px 0 0;
+    font-size: var(--step--2);
+    color: var(--text-muted, #666);
+}
+.a11y-group__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+.a11y-group__row--toggles {
+    flex-direction: column;
+}
+
+.a11y-choice {
+    flex: 1 1 auto;
+    min-height: 44px;
+    padding: 8px 14px;
+    border: 1px solid var(--border-color, #e1e3e8);
+    border-radius: 10px;
+    background: var(--bg-surface, #f4f5f7);
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    text-align: center;
+}
+.a11y-choice:hover {
+    border-color: var(--color-accent, currentColor);
+}
+.a11y-choice[aria-pressed="true"] {
+    border-color: var(--color-accent, currentColor);
+    background: color-mix(in srgb, var(--color-accent, #1f4b8e) 14%, var(--bg-primary, #fff));
+    font-weight: 700;
+}
+.a11y-choice--toggle {
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.a11y-choice--toggle::before {
+    content: "";
+    flex: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid currentColor;
+    border-radius: 5px;
+    opacity: .5;
+}
+.a11y-choice--toggle[aria-pressed="true"]::before {
+    background: currentColor;
+    opacity: 1;
+}
+.a11y-choice--scheme {
+    flex: 1 1 40%;
+}
+.a11y-choice--mono { background: #fff; color: #000; border-color: #000; }
+.a11y-choice--warm { background: #fbf3e4; color: #2b2113; border-color: #d9c7a4; }
+.a11y-choice--dark { background: #0f172a; color: #f8fafc; border-color: #0f172a; }
+.a11y-choice--font-readable { font-family: Verdana, Tahoma, sans-serif; }
+.a11y-choice--font-serif { font-family: Georgia, "Times New Roman", serif; }
+
+.a11y-range {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+.a11y-range__input {
+    flex: 1;
+    min-width: 0;
+    accent-color: var(--color-accent, #1f4b8e);
+}
+.a11y-range__step {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--border-color, #e1e3e8);
+    border-radius: 10px;
+    background: var(--bg-surface, #f4f5f7);
+    color: inherit;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.a11y-drawer__foot {
+    padding: 14px 18px 18px;
+    border-top: 1px solid var(--border-color, #e1e3e8);
+}
+.a11y-reset {
+    width: 100%;
+    min-height: 44px;
+    border: 1px solid var(--border-color, #e1e3e8);
+    border-radius: 10px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+.a11y-reset:hover {
+    background: var(--bg-surface, #f4f5f7);
+}
+.a11y-drawer__note {
+    margin: 10px 0 0;
+    font-size: var(--step--3);
+    color: var(--text-muted, #666);
+}
+
+@media (max-width: 480px) {
+    .a11y-drawer {
+        width: 100vw;
+    }
+}
+
+/* Печать: панель и подложка — экранные элементы. */
+@media print {
+    .a11y-drawer,
+    .a11y-backdrop,
+    .a11y-toggle {
+        display: none !important;
+    }
+}

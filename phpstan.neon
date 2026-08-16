@@ -1,0 +1,15 @@
+parameters:
+    bootstrapFiles:
+        - phpstan-bootstrap.php
+    level: 3
+    paths:
+        - app
+        - public/index.php
+    excludePaths:
+        - tests/*
+    # Production-код по-прежнему использует собственный автолоадер; Composer
+    # подключён только для воспроизводимых инструментов разработки.
+    scanDirectories:
+        - app
+    treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false

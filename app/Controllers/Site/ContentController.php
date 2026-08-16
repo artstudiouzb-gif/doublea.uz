@@ -1,0 +1,122 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controllers\Site;
+
+use App\Core\ContentLanguageNotice;
+use App\Core\Fragment;
+use App\Core\Locale;
+use App\Core\View;
+use App\Models\ContentEntry;
+use App\Models\ContentType;
+
+/**
+ * Публичный фронтенд пользовательских типов контента (Документы, Вакансии,
+ * Тендеры и любые типы, созданные в админке с флагом «публичный»). Общий
+ * список и карточка записи; значения кастомных полей рендерятся по типу.
+ */
+final class ContentController
+{
+    public function index(array $params): void
+    {
+        $type = ContentType::findBySlug((string) ($params['type'] ?? ''));
+        if ($type === null || (int) ($type['is_public'] ?? 0) !== 1) {
+            http_response_code(404);
+            View::render('errors/404');
+            return;
+        }
+
+        $lang = Locale::current();
+        $fields = ContentType::fields((int) $type['id']);
+
+        $perPage = 12;
+        $q = trim((string) ($_GET['q'] ?? ''));
+        $sort = in_array($_GET['sort'] ?? '', ['new', 'old', 'title'], true) ? (string) $_GET['sort'] : 'new';
+        $page = max(1, (int) ($_GET['page'] ?? 1));
+
+        $total = ContentEntry::countTypePublic((int) $type['id'], $q, $lang);
+        $pages = max(1, (int) ceil($total / $perPage));
+        $page = min($page, $pages);
+        $offset = ($page - 1) * $perPage;
+
+        // Тип с дедлайном (вакансии/тендеры) — помечаем просроченные как «архив».
+        $deadlineField = null;
+        foreach ($fields as $f) {
+            if ($f['field_type'] === 'date' && in_array($f['name'], ['deadline', 'end_date'], true)) {
+                $deadlineField = $f['name'];
+                break;
+            }
+        }
+
+        $entries = [];
+        foreach (ContentEntry::forTypePublic((int) $type['id'], $q, $sort, $perPage, $offset, $lang) as $entry) {
+            $entry['data'] = json_decode((string) $entry['data'], true) ?: [];
+            $entry['is_archived'] = false;
+            if ($deadlineField !== null && !empty($entry['data'][$deadlineField])) {
+                $ts = strtotime((string) $entry['data'][$deadlineField]);
+                $entry['is_archived'] = $ts !== false && $ts < strtotime('today');
+            }
+            $entries[] = $entry;
+        }
+
+        $vars = [
+            'type' => $type,
+            'fields' => $fields,
+            'entries' => $entries,
+            'q' => $q,
+            'sort' => $sort,
+            'page' => $page,
+            'pages' => $pages,
+            'total' => $total,
+            'hasDeadline' => $deadlineField !== null,
+        ];
+
+        // AJAX-фильтрация: тот же список, но без шапки и подвала.
+        if (Fragment::wanted()) {
+            Fragment::render('site/_catalog_list', $vars);
+            return;
+        }
+
+        View::render('site/content_index', $vars);
+    }
+
+    public function show(array $params): void
+    {
+        $type = ContentType::findBySlug((string) ($params['type'] ?? ''));
+        if ($type === null || (int) ($type['is_public'] ?? 0) !== 1) {
+            http_response_code(404);
+            View::render('errors/404');
+            return;
+        }
+
+        $entry = ContentEntry::findPublishedBySlug((int) $type['id'], (string) ($params['slug'] ?? ''));
+        if ($entry === null) {
+            http_response_code(404);
+            View::render('errors/404');
+            return;
+        }
+
+        $lang = Locale::current();
+        if ((int) ($type['has_translations'] ?? 0) === 1) {
+            $available = ContentEntry::availableLangs((int) $entry['id']);
+            $path = '/catalog/' . (string) $type['slug'] . '/' . (string) $entry['slug'];
+            if (ContentLanguageNotice::renderIfMissing($available, $path)) {
+                return;
+            }
+            Locale::setContentLangs($available);
+        }
+        $entry = ContentEntry::localize(
+            $entry,
+            $lang,
+            (int) ($type['has_translations'] ?? 0) === 1
+        );
+
+        View::render('site/content_show', [
+            'type' => $type,
+            'fields' => ContentType::fields((int) $type['id']),
+            'entry' => $entry,
+        ]);
+    }
+
+}

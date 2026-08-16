@@ -1,0 +1,35 @@
+# Автоматическая нормализация окончаний строк
+* text=auto
+
+# Служебные папки CI/CD и тестов (исключаются при создании ZIP-архива релиза через git archive)
+/.github export-ignore
+/.claude export-ignore
+/.agents export-ignore
+/.antigravity export-ignore
+/.gemini export-ignore
+/tests export-ignore
+/playwright-report export-ignore
+/test-results export-ignore
+
+# Инструменты разработки и конфигурации линтеров
+/composer.json export-ignore
+/composer.lock export-ignore
+/package.json export-ignore
+/package-lock.json export-ignore
+/Makefile export-ignore
+/phpstan-bootstrap.php export-ignore
+/phpunit.xml export-ignore
+/phpstan.neon export-ignore
+/playwright.config.js export-ignore
+/scripts/build-assets.mjs export-ignore
+/scripts/extract-static-inline-styles.mjs export-ignore
+
+# Локальные инструкции и отчёты разработки
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/README.md export-ignore
+/SECURITY.md export-ignore
+/CLAUDE.md export-ignore
+/PRE_RELEASE_TASKS.md export-ignore
+/WORK_COMPLETED.md export-ignore
+/skills-lock.json export-ignore

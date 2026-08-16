@@ -1,0 +1,382 @@
+/* Homepage news feature — editorial content styling for the existing mosaic.
+ *
+ * The Directions `feature-card` interaction is the visual source of truth for
+ * homepage card chrome. News content styling stays local to this file, while
+ * projects, news cards and media cards reuse the same frame/shadow/spotlight
+ * language without changing their inner layouts.
+ */
+
+/* Section heading */
+.block-newsfeat--mosaic .section-head {
+    align-items: flex-end;
+    margin-bottom: clamp(22px, 2.4vw, 34px);
+}
+
+.block-newsfeat--mosaic .section-head__title {
+    position: relative;
+    padding-bottom: 12px;
+    letter-spacing: -.025em;
+}
+
+.block-newsfeat--mosaic .section-head__title::after {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    bottom: 0;
+    width: 34px;
+    height: 3px;
+    border-radius: var(--radius-pill);
+    background: var(--color-accent, var(--gov-teal));
+}
+
+.block-newsfeat--mosaic .section-head__all {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    font-weight: 700;
+    text-underline-offset: 5px;
+}
+
+/* Featured story: only the content overlay changes. */
+.block-newsfeat--mosaic .newsfeat-lead__frame {
+    background: var(--gov-navy);
+}
+
+.block-newsfeat--mosaic .newsfeat-lead__over {
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: clamp(8px, .8vw, 12px);
+    padding: 22px;
+    border: 0;
+    border-radius: 0;
+    background:
+        linear-gradient(to top,
+            rgba(5, 28, 55, .98) 0%,
+            rgba(5, 31, 61, .93) 25%,
+            rgba(6, 35, 67, .70) 48%,
+            rgba(6, 35, 67, .22) 70%,
+            rgba(6, 35, 67, 0) 86%);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.block-newsfeat--mosaic .newsfeat-lead__over::after {
+    content: "";
+    position: absolute;
+    inset-inline-end: clamp(18px, 2vw, 30px);
+    bottom: clamp(16px, 2vw, 28px);
+    width: clamp(72px, 8vw, 112px);
+    aspect-ratio: 1;
+    opacity: .05;
+    pointer-events: none;
+    background: currentColor;
+    -webkit-mask: var(--gov-emblem) center / contain no-repeat;
+    mask: var(--gov-emblem) center / contain no-repeat;
+}
+
+.block-newsfeat--mosaic .newsfeat-lead .news-meta,
+.block-newsfeat--mosaic .newsfeat-lead__title,
+.block-newsfeat--mosaic .newsfeat-lead .card-more {
+    position: relative;
+    z-index: 1;
+}
+
+.block-newsfeat--mosaic .newsfeat-lead__title {
+    max-width: 94%;
+    color: #fff;
+    font-size: clamp(1.45rem, 2vw, 2.15rem);
+    line-height: 1.18;
+    letter-spacing: -.026em;
+    font-weight: 760;
+    overflow-wrap: anywhere;
+}
+
+.block-newsfeat--mosaic .newsfeat-lead .news-meta {
+    gap: 9px;
+    color: rgba(255, 255, 255, .88);
+}
+
+.block-newsfeat--mosaic .newsfeat-lead .news-category--on-media,
+.block-newsfeat--mosaic .newsfeat-lead .newsfeat__date--on-media {
+    color: rgba(255, 255, 255, .9);
+}
+
+/* Keep the homepage mosaic compact without changing the actual CMS content. */
+.block-newsfeat--mosaic .newsfeat-lead__excerpt,
+.block-newsfeat--mosaic .newsfeat-mini__excerpt,
+.block-newsfeat--mosaic .newsfeat-text__excerpt {
+    display: none;
+}
+
+.block-newsfeat--mosaic .newsfeat-lead .card-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 4px;
+    padding: 0;
+    border: 0;
+    color: #fff;
+    font-weight: 700;
+}
+
+/* Secondary card typography/content only. */
+.block-newsfeat--mosaic .newsfeat-mini__title {
+    color: var(--gov-title);
+    font-size: clamp(1rem, 1.08vw, 1.16rem);
+    line-height: 1.38;
+    letter-spacing: -.012em;
+    font-weight: 720;
+    overflow-wrap: anywhere;
+}
+
+.block-newsfeat--mosaic .newsfeat-mini .card-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 2px;
+    border: 0;
+    color: var(--gov-teal-text);
+    font-weight: 700;
+}
+
+.block-newsfeat--mosaic .newsfeat-text .news-meta {
+    gap: 8px;
+}
+
+.block-newsfeat--mosaic .newsfeat-text__title {
+    color: var(--gov-title);
+    font-size: clamp(.98rem, 1.03vw, 1.12rem);
+    line-height: 1.42;
+    letter-spacing: -.01em;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.block-newsfeat--mosaic .newsfeat-text__arrow {
+    margin-top: auto;
+    width: auto;
+    height: auto;
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    color: var(--gov-teal-text);
+    background: transparent;
+    border-radius: 0;
+    font-size: var(--step-1);
+    line-height: 1;
+}
+
+@media (max-width: 560px) {
+    .block-newsfeat--mosaic .newsfeat-lead__over {
+        padding: 14px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+ * News index content hierarchy
+ *
+ * `/news` keeps its own composition (one compact lead + photo-card grid), but
+ * shares the homepage photo-card typography. The lead remains editorially
+ * stronger without turning into a second hero.
+ * -------------------------------------------------------------------------- */
+.newslist-lead {
+    grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    gap: 0;
+    align-items: stretch;
+    margin-bottom: var(--space-m);
+}
+
+.newslist-lead .news-cover {
+    height: auto;
+    aspect-ratio: 16 / 9;
+}
+
+.newslist-lead__media {
+    min-height: 0;
+}
+
+.newslist-lead__body {
+    justify-content: center;
+    gap: 9px;
+    padding: var(--space-m);
+}
+
+.newslist-lead .news-meta,
+.newslist-grid .relnews-card > .news-meta {
+    gap: 8px;
+}
+
+.newslist-lead .newslist__date,
+.newslist-grid .relnews-card__date {
+    color: var(--gov-muted);
+    font-size: var(--step--3);
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.newslist-lead__title {
+    color: var(--gov-title);
+    font-size: clamp(var(--step-2), 1.6vw, var(--step-3));
+    line-height: 1.3;
+    letter-spacing: -.012em;
+    font-weight: 720;
+    overflow-wrap: anywhere;
+}
+
+body.design-type-static .newslist-lead .newslist-lead__title {
+    font-size: clamp(var(--step-2), 1.6vw, var(--step-3));
+}
+
+.newslist-grid .relnews-card__title {
+    color: var(--gov-title);
+    font-size: clamp(1rem, 1.08vw, 1.16rem);
+    line-height: 1.38;
+    letter-spacing: -.012em;
+    font-weight: 720;
+    display: block;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+    overflow-wrap: anywhere;
+}
+
+.newslist-lead:hover .newslist-lead__title,
+.newslist-grid .relnews-card:hover .relnews-card__title {
+    color: var(--gov-title);
+}
+
+@media (max-width: 900px) {
+    .newslist-lead {
+        grid-template-columns: 1fr;
+    }
+
+    .newslist-lead__body {
+        padding: var(--space-s);
+    }
+}
+
+/* --------------------------------------------------------------------------
+ * Feature-card interaction inheritance
+ *
+ * Do not redesign `feature-card`. Copy its existing Directions-card shell to
+ * the other homepage card families: same border, 3px accent edge, shadow,
+ * configurable hover elevation, timing and 220px mouse-following spotlight.
+ * -------------------------------------------------------------------------- */
+:is(
+    .project-card.project-card,
+    .mediacard.mediacard,
+    .block-newsfeat--mosaic .newsfeat-lead,
+    .block-newsfeat--mosaic .newsfeat-mini,
+    .block-newsfeat--mosaic .newsfeat-text,
+    .newslist-lead,
+    .newslist-grid .relnews-card
+) {
+    --feature-card-motion-duration: .62s;
+    --feature-card-motion-ease: cubic-bezier(.16, 1, .3, 1);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--gov-border);
+    border-bottom: 3px solid transparent;
+    border-radius: var(--radius, 14px);
+    background: var(--gov-surface);
+    box-shadow: 0 4px 16px -2px rgba(15, 23, 42, .04);
+    backface-visibility: hidden;
+    transition:
+        transform var(--feature-card-motion-duration) var(--feature-card-motion-ease),
+        box-shadow var(--feature-card-motion-duration) var(--feature-card-motion-ease),
+        border-color .46s ease,
+        border-bottom-color .46s ease,
+        background-color .46s ease;
+}
+
+:is(
+    .project-card.project-card,
+    .mediacard.mediacard,
+    .block-newsfeat--mosaic .newsfeat-lead,
+    .block-newsfeat--mosaic .newsfeat-mini,
+    .block-newsfeat--mosaic .newsfeat-text,
+    .newslist-lead,
+    .newslist-grid .relnews-card
+)::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+        220px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+        color-mix(in srgb, var(--gov-teal) 7%, transparent),
+        transparent 80%
+    );
+    opacity: 0;
+    transition: opacity .5s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    :is(
+        .project-card.project-card,
+        .mediacard.mediacard,
+        .block-newsfeat--mosaic .newsfeat-lead,
+        .block-newsfeat--mosaic .newsfeat-mini,
+        .block-newsfeat--mosaic .newsfeat-text,
+        .newslist-lead,
+        .newslist-grid .relnews-card
+    ):hover {
+        background: var(--gov-surface);
+        box-shadow: 0 16px 36px rgba(37, 99, 235, .12);
+        transform: translateY(var(--feature-card-hover-lift, -4px));
+        border-color: var(--color-accent, var(--gov-teal));
+        border-bottom-color: var(--color-accent, var(--gov-teal));
+    }
+
+    :is(
+        .project-card.project-card,
+        .mediacard.mediacard,
+        .block-newsfeat--mosaic .newsfeat-lead,
+        .block-newsfeat--mosaic .newsfeat-mini,
+        .block-newsfeat--mosaic .newsfeat-text,
+        .newslist-lead,
+        .newslist-grid .relnews-card
+    ):hover::before {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :is(
+        .project-card.project-card,
+        .mediacard.mediacard,
+        .block-newsfeat--mosaic .newsfeat-lead,
+        .block-newsfeat--mosaic .newsfeat-mini,
+        .block-newsfeat--mosaic .newsfeat-text,
+        .newslist-lead,
+        .newslist-grid .relnews-card
+    ),
+    :is(
+        .project-card.project-card,
+        .mediacard.mediacard,
+        .block-newsfeat--mosaic .newsfeat-lead,
+        .block-newsfeat--mosaic .newsfeat-mini,
+        .block-newsfeat--mosaic .newsfeat-text,
+        .newslist-lead,
+        .newslist-grid .relnews-card
+    )::before {
+        transition: none;
+    }
+
+    :is(
+        .project-card.project-card,
+        .mediacard.mediacard,
+        .block-newsfeat--mosaic .newsfeat-lead,
+        .block-newsfeat--mosaic .newsfeat-mini,
+        .block-newsfeat--mosaic .newsfeat-text,
+        .newslist-lead,
+        .newslist-grid .relnews-card
+    ):hover {
+        transform: none;
+    }
+}

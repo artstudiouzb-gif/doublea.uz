@@ -429,7 +429,7 @@ body.aa2-page a {
 .aa2-footer__brand { font-weight: 800; letter-spacing: -.025em; }
 .aa2-footer__note { color: var(--aa2-muted); font-size: .82rem; }
 
-@media (max-width: 980px) {
+@media (max-width: 1000px) {
     .aa2-header__inner { grid-template-columns: auto auto; }
     .aa2-menu-toggle { display: inline-flex; }
     .aa2-header__navwrap {
@@ -457,7 +457,7 @@ body.aa2-page a {
     .aa2-foundation__item { min-height: 0; }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
     .aa2-header__inner { min-height: 72px; }
     .aa2-hero__grid { min-height: 0; padding-block: 56px 70px; gap: 36px; }
     .aa2-hero__title { font-size: clamp(3rem, 17vw, 5rem); }

@@ -19,7 +19,7 @@ test('PasswordPolicy: популярный пароль из словаря от
 });
 
 test('PasswordPolicy: пароль с логином внутри отклоняется', function () {
-    assert_false(PasswordPolicy::isValid('artstudio-2026!', ['artstudio', 'a@b.com']));
+    assert_false(PasswordPolicy::isValid('doublea-2026!', ['doublea', 'a@b.com']));
 });
 
 test('PasswordPolicy: сильный уникальный пароль принимается', function () {

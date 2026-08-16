@@ -418,7 +418,7 @@ $searchQuery = (string) ($_GET['q'] ?? '');
     var btnGrid = document.getElementById('view_mode_grid');
 
     if (container && btnList && btnGrid) {
-        var savedMode = localStorage.getItem('artstudio:files-view-mode') || 'grid';
+        var savedMode = localStorage.getItem('doublea:files-view-mode') || 'grid';
         setMode(savedMode);
 
         btnList.addEventListener('click', function() { setMode('list'); });
@@ -434,7 +434,7 @@ $searchQuery = (string) ($_GET['q'] ?? '');
                 btnGrid.classList.add('is-active');
                 btnList.classList.remove('is-active');
             }
-            try { localStorage.setItem('artstudio:files-view-mode', mode); } catch(e) {}
+            try { localStorage.setItem('doublea:files-view-mode', mode); } catch(e) {}
         }
     }
 

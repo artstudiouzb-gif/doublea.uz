@@ -6,13 +6,13 @@ declare(strict_types=1);
  * Импорт новостей из старой CMS (REST API или WXR) с фотографиями.
  *
  * Запуск на сервере, где доступен старый сайт:
- *   php scripts/wp_import.php https://asdr.gov.uz [опции]
+ *   php scripts/wp_import.php https://legacy.example.uz [опции]
  *
  * Опции:
  *   --limit N        импортировать не более N новостей (0 = все)
  *   --status STATE   draft (по умолчанию) | published
  *   --author ID      id пользователя-автора (по умолчанию первый админ)
- *   --lang OLD:ART   язык (повторяемо): код языка источника → код языка ArtStudio.
+ *   --lang OLD:ART   язык (повторяемо): код языка источника → код языка DoubleA.
  *                    Первый = основной, остальные пишутся переводами. Напр.:
  *                    --lang uz:uz --lang ru:ru   (двуязычный сайт)
  *   --dry-run        только показать, сколько будет импортировано, без записи
@@ -56,7 +56,7 @@ for ($i = 0; $i < count($args); $i++) {
 
 if ($source === '') {
     fwrite(STDERR, "Укажите адрес сайта ИЛИ файл экспорта .xml, напр.:\n"
-        . "  php scripts/wp_import.php https://asdr.gov.uz --lang uz:uz --lang ru:ru --limit 20\n"
+        . "  php scripts/wp_import.php https://legacy.example.uz --lang uz:uz --lang ru:ru --limit 20\n"
         . "  php scripts/wp_import.php export.xml --lang uz:uz --lang ru:ru --uploads /path/wp-content/uploads\n");
     exit(2);
 }

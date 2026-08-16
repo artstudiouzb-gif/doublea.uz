@@ -50,7 +50,7 @@ test('Пользовательские исходящие запросы зак�
 });
 
 test('Загрузчик проверяет реальное содержимое, а не только имя файла', function (): void {
-    $path = tempnam(sys_get_temp_dir(), 'asdr-upload-');
+    $path = tempnam(sys_get_temp_dir(), 'doublea-upload-');
     if ($path === false) {
         throw new RuntimeException('Не удалось создать временный файл');
     }

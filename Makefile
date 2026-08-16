@@ -1,9 +1,9 @@
-# Makefile for ArtStudio CMS (asdr)
+# Makefile for DoubleA
 
 .PHONY: help test lint analyse check smoke
 
 help:
-	@echo "ArtStudio CMS Development Commands:"
+	@echo "DoubleA Development Commands:"
 	@echo "  make test      Run PHP unit test suite"
 	@echo "  make lint      Run PHP syntax check across app/ directory"
 	@echo "  make analyse   Run PHPStan static analysis"

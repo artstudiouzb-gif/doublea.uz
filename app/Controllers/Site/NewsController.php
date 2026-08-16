@@ -74,7 +74,7 @@ final class NewsController
         $lang = Locale::current();
         $items = News::published(30, 0, $lang);
         $base = AppUrl::base();
-        $siteName = (string) Setting::get('site_name', 'ArtStudio');
+        $siteName = (string) Setting::get('site_name', 'DoubleA');
         $selfUrl = $base . Locale::url('news/rss.xml', $lang);
 
         header('Content-Type: application/rss+xml; charset=UTF-8');

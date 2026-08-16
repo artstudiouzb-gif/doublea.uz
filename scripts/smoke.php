@@ -13,7 +13,7 @@ declare(strict_types=1);
  *
  * Примеры:
  *   php scripts/smoke.php http://127.0.0.1:8000
- *   php scripts/smoke.php https://artstudio.uz --admin admin:secret
+ *   php scripts/smoke.php https://doublea.uz --admin admin:secret
  *
  * Код выхода 0 — всё зелёное; 1 — есть падения (удобно для CI/скриптов).
  */
@@ -67,7 +67,7 @@ function fetch(string $url, string $cookieJar, ?array $post = null): array
         CURLOPT_TIMEOUT => 20,
         CURLOPT_COOKIEJAR => $cookieJar,
         CURLOPT_COOKIEFILE => $cookieJar,
-        CURLOPT_USERAGENT => 'ArtStudio-Smoke/1.0',
+        CURLOPT_USERAGENT => 'DoubleA-Smoke/1.0',
         CURLOPT_SSL_VERIFYPEER => false,
         CURLOPT_SSL_VERIFYHOST => false,
     ]);

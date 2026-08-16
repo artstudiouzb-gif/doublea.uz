@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * Воркер очереди почты ArtStudio CMS.
+ * Воркер очереди почты DoubleA.
  *   php app/Console/mail_worker.php
  *
  * Запускать по Cron (например, каждую минуту):

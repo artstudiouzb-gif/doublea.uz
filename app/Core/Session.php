@@ -9,7 +9,7 @@ final class Session
 {
     public static function hasCookie(): bool
     {
-        $name = (string) Config::get('session.name', 'asc_session');
+        $name = (string) Config::get('session.name', 'doublea_session');
         return isset($_COOKIE[$name]) && is_string($_COOKIE[$name]) && $_COOKIE[$name] !== '';
     }
 
@@ -24,7 +24,7 @@ final class Session
             $lifetime,
             (int) Config::get('session.absolute_lifetime', 28800)
         );
-        session_name((string) Config::get('session.name', 'asc_session'));
+        session_name((string) Config::get('session.name', 'doublea_session'));
         ini_set('session.use_strict_mode', '1');
         ini_set('session.use_only_cookies', '1');
         ini_set('session.cookie_httponly', '1');

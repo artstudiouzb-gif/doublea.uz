@@ -266,7 +266,7 @@ final class InstallController
             }
 
             // Отправка уведомления об успешной установке на email администратора.
-            $siteName = Setting::get('site_name', 'ASDR CMS');
+            $siteName = Setting::get('site_name', 'DoubleA');
             $subject = sprintf('Установка %s успешно завершена', $siteName);
             $body = sprintf(
                 "Здравствуйте, %s!\n\n"
@@ -345,7 +345,7 @@ final class InstallController
         $appUrl = $this->guessAppUrl();
         $encryptionKey = bin2hex(random_bytes(32));
         $tpl = "<?php\n\ndeclare(strict_types=1);\n\n"
-            . "// Сгенерировано веб-инсталлятором ASDR CMS.\n"
+            . "// Сгенерировано веб-инсталлятором DoubleA.\n"
             . "return [\n"
             . "    'app' => [\n"
             . "        'env' => getenv('APP_ENV') ?: 'production',\n"
@@ -366,7 +366,7 @@ final class InstallController
             . "        'charset' => 'utf8mb4',\n"
             . "    ],\n"
             . "    'session' => [\n"
-            . "        'name' => 'asc_session',\n"
+            . "        'name' => 'doublea_session',\n"
             . "        'lifetime' => 7200,\n"
             . "        'absolute_lifetime' => (int) (getenv('SESSION_ABSOLUTE_LIFETIME') ?: 28800),\n"
             . "    ],\n"
@@ -387,7 +387,7 @@ final class InstallController
             . "        'username' => getenv('SMTP_USERNAME') ?: '',\n"
             . "        'password' => getenv('SMTP_PASSWORD') ?: '',\n"
             . "        'from_email' => getenv('SMTP_FROM_EMAIL') ?: '',\n"
-            . "        'from_name' => getenv('SMTP_FROM_NAME') ?: 'ASDR CMS',\n"
+            . "        'from_name' => getenv('SMTP_FROM_NAME') ?: 'DoubleA',\n"
             . "        'timeout' => 15,\n"
             . "    ],\n"
             . "];\n";
@@ -417,7 +417,7 @@ final class InstallController
             throw new \RuntimeException('Каталог недоступен для записи: ' . $directory);
         }
 
-        $temporary = tempnam($directory, '.asdr-');
+        $temporary = tempnam($directory, '.doublea-');
         if ($temporary === false) {
             throw new \RuntimeException('Не удалось создать временный файл конфигурации.');
         }

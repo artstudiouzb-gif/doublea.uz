@@ -104,7 +104,7 @@ test('content revision UI exposes history links and local draft safeguards', fun
     assert_contains('expected_updated_at', $pageForm);
     assert_contains('expected_lock_version', $pageForm);
     assert_contains('data-content-draft', $newsForm);
-    assert_contains('artstudio:draft:', $adminJs);
+    assert_contains('doublea:draft:', $adminJs);
     assert_contains('draft_saved', $adminJs);
     assert_contains('beforeunload', $adminJs);
 });

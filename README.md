@@ -1,263 +1,34 @@
-# ArtStudio CMS
+# doublea.uz
 
-CMS на чистом PHP 8.2+ и MySQL/MariaDB — **без Composer, npm и внешних
-библиотек во время выполнения**. Composer/PHPStan и npm/Playwright используются
-только для разработки и CI. Всё, от TOTP и SMTP-клиента до Web Push (RFC 8291/8292) и
-QR-генератора, реализовано на стандартных расширениях PHP. Дизайн страниц
-собирается из модульных блоков с изолированными (scoped) стилями; каждая
-секция сайта управляется из админки.
+Web project for **doublea.uz**.
 
-## Возможности
+The repository keeps the existing PHP/MySQL administration and content-management backend while the public frontend is being rebuilt as an independent V2 layer.
 
-**Контент**
-- Конструктор страниц: 31 тип блока (hero, слайдеры, галереи, FAQ,
-  таймлайны, счётчики, формы, колонки с вложенными блоками…), drag-and-drop
-  сортировка, библиотека шаблонов блоков, история версий, предпросмотр
-  черновиков.
-- Новости с медиа-движком (галереи, YouTube без внешних запросов, фокальная
-  точка обложки), бейджи и фильтры (пресс-релизы), календарь мероприятий.
-- Конструктор типов контента: свои разделы (вакансии, тендеры, документы…)
-  с произвольными полями создаются из админки без кода.
-- Мультиязычность: языки управляются из админки, переводы страниц/новостей/
-  меню, независимые стеки блоков на язык, graceful fallback.
-- Формы: конструктор полей, условная логика, файлы, AJAX-отправка, капча
-  (своя, на GD, без внешних сервисов), honeypot, согласие ПДн, уведомления
-  на e-mail и в Telegram.
+## Structure
 
-**Дизайн**
-- Конструкторы шапки (4 макета, отдельный мобильный билдер) и футера
-  (колонки + виджеты) — drag-and-drop по зонам.
-- Дизайн-система: цветовые палитры, Google-шрифты (22 семейства) или
-  локальный .woff2 с preload, темы light/dark/auto, версия для слабовидящих,
-  пресеты отступов и анимации появления блоков. Поиск в шапке выводится в
-  одном выбранном варианте: строкой или всплывающей панелью.
-- Сайдбар-виджеты с панелью оформления, меню с подменю, SVG-иконками и
-  настраиваемыми разделителями верхнего уровня.
-- White-label админки: своё название, логотип и акцентный цвет панели.
+- `app/Controllers/Admin/`, `app/Views/admin/` — administration and CMS workflows.
+- `app/Models/`, `app/Core/` — application and content infrastructure.
+- `app/Views/site/v2/` — new public frontend templates.
+- `public/assets/css/frontend-v2.css` — isolated V2 styles.
+- `public/assets/js/frontend-v2.js` — isolated V2 interactions.
+- `templates/` — content blocks and widgets used by the backend.
 
-**Публикация и интеграции**
-- Автопубликация новостей: Telegram-канал (медиагруппы), Facebook, LinkedIn,
-  Instagram — через очередь с ретраями.
-- Web Push о новостях (VAPID/aes128gcm, реализация на ext-openssl).
-- E-mail-рассылки подписчикам (дайджест), исходящие вебхуки с HMAC-подписью.
-- Сторонние счётчики в нижней строке футера: HTML и скрипты доверенных
-  провайдеров с CSP-nonce.
-- SEO: canonical, Open Graph, JSON-LD (организация/хлебные крошки/события),
-  sitemap.xml, robots.txt, RSS, hreflang-заготовка, аналитика по строгим ID
-  с cookie-consent.
+The legacy public frontend remains only during the migration period and is not the design source for V2.
 
-**Эксплуатация**
-- Веб-инсталлятор в 4 шага, CLI-миграции, автобэкапы с ротацией
-  «7 дневных + 4 недельных» и скриптом восстановления.
-- Очереди (почта/соцсети/вебхуки/push) на cron-воркерах с heartbeat,
-  `/health`-эндпоинт, Telegram-алертинг с уровнями критичности и троттлингом.
-- Производительность: дисковый кэш страниц, WebP + адаптивные размеры,
-  lazy-load, версионированная статика с годовым кэшем, поддержка CDN.
-- Режим обслуживания, корзина (soft delete), журнал действий, массовые
-  операции, глобальный поиск Ctrl+K.
+## Requirements
 
-**Безопасность** (подробно — в [SECURITY.md](SECURITY.md))
-- Обязательное подтверждение входа администратора одноразовым кодом через
-  Telegram Bot API или Telegram Gateway; TOTP доступен для файлового портала.
-  Bcrypt cost 12, политика паролей со словарём, управление активными сессиями.
-- CSRF на всех POST, rate limiting, security-заголовки и CSP на всех
-  ответах (инлайн-скрипты только по nonce, без `unsafe-inline`),
-  журнал входов с IP, SVG-санитайзер, SSRF-guard, проверка реального MIME
-  загрузок, защищённые файлы вне document root.
+- PHP 8.2+
+- MySQL 5.7+ or MariaDB 10.3+
+- Apache or nginx with the document root pointed to `public/`
 
-## Требования
-
-- PHP 8.2+ с `pdo_mysql`, `mbstring`, `json`, `gd`, `curl`, `dom`, `openssl`, `zip`
-- MySQL 5.7+ / MariaDB 10.3+
-- Apache (`mod_rewrite`, `mod_headers`) или nginx
-  ([docs/nginx.conf.example](docs/nginx.conf.example))
-
-## Установка
-
-Для нового сервера скачайте ZIP из раздела **Releases** (не `Source code`),
-распакуйте его, направьте document root на `public/` и откройте сайт.
-Запустится мастер установки (проверка окружения → БД → сайт →
-супер-администратор). `config/config.php` заранее создавать или копировать
-не нужно: его безопасно создаёт установщик. Первый вход в `/admin` требует
-настройки 2FA.
-
-Полное демо загружается уже после установки: **Админка → Настройки сайта →
-Демо-контент**, код подтверждения `DEMO`. Команда
-`php database/seed_demo.php --reset` предназначена только для уже
-установленной системы, где существует `config/config.php`.
-
-Ручной путь и все детали деплоя — в [docs/DEPLOY.md](docs/DEPLOY.md):
-document root и fallback через `.htaccess`, HTTPS, обязательная проверка
-безопасности на проде, cron-воркеры, быстродействие (OPcache, gzip, HTTP/2),
-обновление миграциями.
-
-### Сборка релизного ZIP
-
-GitHub автоматически проверяет и собирает чистый установочный архив при
-запуске workflow **Release package**. Пуш тега `v*` дополнительно публикует
-ZIP и его SHA-256 в GitHub Releases. Локально тот же архив можно получить
-без Composer и npm:
-
-```bash
-git archive --format=zip --prefix=asdr-cms/ --output=asdr-cms-release.zip HEAD
-```
-
-```bash
-# обновление существующей установки
-php database/migrate.php status   # какие миграции новые
-php database/migrate.php          # накатить
-php database/doctor.php           # read-only проверка структуры и целостности БД
-```
-
-## Cron
-
-Очереди и бэкапы работают через воркеры (`app/Console/*_worker.php`) —
-готовый crontab в [docs/DEPLOY.md](docs/DEPLOY.md), раздел 6. `/health`
-сообщает о замолчавших воркерах.
-
-## Архитектура
-
-```
-artstudio/
-├── public/                # document root: index.php, download.php, статика
-├── app/
-│   ├── Core/              # ядро: Router, Auth, TOTP, Csrf, BlockRenderer,
-│   │                      # CssScoper, Mailer, WebPush, SocialPublisher…
-│   ├── Controllers/       # Admin/* и Site/*
-│   ├── Models/            # PDO-модели (prepared statements)
-│   ├── Views/             # PHP-шаблоны (admin/*, site/*, errors/*)
-│   └── Console/           # cron-воркеры
-├── templates/
-│   ├── blocks/            # шаблоны блоков конструктора (31 тип)
-│   └── widgets/           # шаблоны сайдбар-виджетов
-├── database/              # schema.sql, migrations/, migrate.php, restore.php
-├── docs/                  # DEPLOY, RELEASE, ROADMAP, SECRETS, CDN, nginx
-├── config/                # config.php (создаёт установщик; не в git)
-└── storage/               # логи, кэш, защищённые файлы (вне docroot)
-```
-
-Автозагрузка — PSR-4-подобный `spl_autoload_register` (`App\` → `app/`).
-Новый тип блока = один файл в `templates/blocks/` + дефолты в
-`BlockRenderer::DEFAULTS`.
-
-**Изоляция стилей блоков**: HTML блока оборачивается в
-`<section id="block-{id}">`, а его custom CSS проходит через `CssScoper` —
-каждый селектор получает префикс `#block-{id}` (с поддержкой `@media`/
-`@supports`), поэтому стили одного блока физически не задевают другой.
-
-## Тесты
+## Development checks
 
 ```bash
 php tests/run.php
-```
-
-Нативный тест-раннер без PHPUnit регистрирует **609 тестовых сценариев**.
-Без переменных окружения DB-сценарии пропускаются; с `TEST_DB_HOST`,
-`TEST_DB_DATABASE`, `TEST_DB_USERNAME`, `TEST_DB_PASSWORD` проверяются также
-БД и консистентность миграций (`schema.sql` и миграции обязаны сходиться).
-
-### Smoke-обход сайта (проверка после деплоя)
-
-Вместо ручного клика по десяткам страниц — один проход по всему сайту с
-проверкой на HTTP-ошибки и PHP-фаталы:
-
-```bash
-# только публичная часть
-php scripts/smoke.php https://artstudio.uz
-
-# + все разделы админки (обход по ссылкам от главной + вход)
-php scripts/smoke.php https://artstudio.uz --admin ЛОГИН:ПАРОЛЬ
-```
-
-Обходит публичные страницы (по ссылкам от главной + ключевые маршруты, RU и UZ)
-и, при логине, все разделы админки; печатает таблицу «страница → статус» и
-выходит с кодом 1, если хоть где-то ошибка. Нужен только PHP c cURL — работает
-и на shared-хостинге. При включённой 2FA обход админки пропускается.
-
-### Безопасный выпуск после загрузки кода
-
-После загрузки новой версии на сервер выполните одну команду:
-
-```bash
-php scripts/release.php https://artstudio.uz
-```
-
-Она останавливается при первой ошибке и последовательно проверяет окружение,
-создаёт полный бэкап, применяет миграции, шифрует/перешифровывает секреты БД,
-очищает файловый кеш, повторно проверяет конфигурацию и запускает smoke-обход.
-Перед первым таким выпуском старой установки добавьте в `config/config.php`
-блок `crypto` из `config/config.example.php` и сгенерируйте ключ командой
-`php -r "echo bin2hex(random_bytes(32)), PHP_EOL;"`. Без корректного ключа
-выпуск остановится до изменения БД. Скрипт намеренно не выполняет
-`git pull`: способ доставки кода зависит от хостинга и остаётся отдельным,
-явно контролируемым шагом. Только проверить сервер без изменений можно так:
-
-```bash
-php scripts/release_check.php
-```
-
-### CI
-
-`.github/workflows/ci.yml` на каждый push/PR запускает четыре задачи: `php -l`
-и полный прогон тестов на PHP 8.2–8.4 с MySQL 8; обязательный PHPStan и
-`composer audit`; проверку синтаксиса JavaScript и актуальности production-
-ассетов на Node.js 22; публичные browser-smoke сценарии в Chromium. При падении browser smoke отчёт,
-скриншоты и лог PHP-сервера сохраняются в artifact `browser-smoke-diagnostics`.
-
-Composer используется только для инструментов разработки и не участвует в
-работе CMS на production. Установка и локальный запуск анализа:
-
-```bash
-composer install
 composer analyse
-composer test
-```
-
-Папка `vendor/` не загружается в Git. Версия PHPStan закреплена в
-`composer.json`; production-автозагрузка `App\` → `app/` не изменена.
-
-Исходные публичные CSS/JS редактируются в `public/assets/css` и
-`public/assets/js`. Перед коммитом их production-бандлы пересобираются так:
-
-```bash
 npm ci
-npm run build:assets
 npm run check:assets
+npm run test:browser
 ```
 
-Готовые `public.min.css` и `public.min.js` хранятся в репозитории, поэтому
-на production и shared-хостинге Node.js не требуется.
-
-### Кеш публичных страниц
-
-Публичные ответы без сессии получают безопасные `Cache-Control` заголовки.
-TTL браузера и CDN настраиваются в «Админка → Производительность»; страницы с
-формами/CSRF, авторизацией, поиском, CAPTCHA и ошибками всегда исключаются.
-После изменения публичного контента файловый кеш и настроенный Cloudflare
-сбрасываются автоматически.
-
-### Оптимизация старых изображений
-
-Новые JPEG/PNG автоматически получают WebP-варианты 800/1600/full. Для файлов,
-загруженных до включения оптимизации, сначала выполните безопасный просмотр,
-затем конвертацию:
-
-```bash
-php scripts/optimize_images.php --dry-run
-php scripts/optimize_images.php
-```
-
-Команда пропускает актуальные варианты и не перезаписывает оригиналы. Для
-порционного запуска используйте `--limit=100`, для регенерации — `--force`.
-
-## Документация
-
-| Документ | Что внутри |
-|----------|------------|
-| [docs/DEPLOY.md](docs/DEPLOY.md) | деплой, cron, быстродействие, обновление |
-| [docs/RELEASE.md](docs/RELEASE.md) | итог первого релиза, чек-лист запуска |
-| [docs/ROADMAP.md](docs/ROADMAP.md) | план второго релиза |
-| [docs/ADMIN.md](docs/ADMIN.md) | работа с редактором, дизайном, счётчиками и демо-контентом |
-| [SECURITY.md](SECURITY.md) | модель угроз, аудит, ручные проверки |
-| [docs/SECRETS.md](docs/SECRETS.md) | ротация ключей и токенов |
-| [docs/CDN.md](docs/CDN.md) | раздача статики через CDN |
+Production runtime does not require Node.js tooling; npm and Composer development dependencies are used for validation and CI.

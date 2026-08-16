@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * Воркер согласованного бэкапа ArtStudio CMS (задача 1.2).
+ * Воркер согласованного бэкапа DoubleA (задача 1.2).
  *   php app/Console/backup_worker.php
  *
  * Запускать по Cron, например раз в сутки в 03:00:

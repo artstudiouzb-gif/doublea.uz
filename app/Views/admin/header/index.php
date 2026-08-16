@@ -1108,7 +1108,7 @@ $heightSelect = function (string $name, string $current): string {
             panel.hidden = !active;
         });
         if (remember) {
-            try { localStorage.setItem('asdr-header-active-tab', targetId); } catch (error) {}
+            try { localStorage.setItem('doublea-header-active-tab', targetId); } catch (error) {}
         }
     };
 
@@ -1130,7 +1130,7 @@ $heightSelect = function (string $name, string $current): string {
     });
 
     var savedTab = '';
-    try { savedTab = localStorage.getItem('asdr-header-active-tab') || ''; } catch (error) {}
+    try { savedTab = localStorage.getItem('doublea-header-active-tab') || ''; } catch (error) {}
     var savedTabButton = savedTab
         ? document.querySelector('[data-hdr-tab-target="' + savedTab + '"]')
         : null;

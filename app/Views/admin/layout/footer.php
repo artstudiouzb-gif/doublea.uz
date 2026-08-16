@@ -394,7 +394,7 @@ window.addEventListener('DOMContentLoaded', function () {
         syncCollapsedState();
         collapse.addEventListener('click', function () {
             var collapsed = document.documentElement.classList.toggle('admin-nav-collapsed');
-            try { localStorage.setItem('artstudio:admin-sidebar-collapsed', collapsed ? '1' : '0'); } catch (e) {}
+            try { localStorage.setItem('doublea:admin-sidebar-collapsed', collapsed ? '1' : '0'); } catch (e) {}
             syncCollapsedState();
         });
     }

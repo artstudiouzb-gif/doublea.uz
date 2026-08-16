@@ -5,12 +5,12 @@ declare(strict_types=1);
 use App\Core\SchemaOrg;
 
 test('SchemaOrg::organization собирает карточку, пустые поля опускаются', function () {
-    $full = SchemaOrg::organization('АСДР', 'https://asdr.gov.uz', '+998 71 200-00-00', 'info@asdr.gov.uz', 'г. Ташкент', 'https://asdr.gov.uz/logo.png');
+    $full = SchemaOrg::organization('АСДР', 'https://legacy.example.uz', '+998 71 200-00-00', 'info@legacy.example.uz', 'г. Ташкент', 'https://legacy.example.uz/logo.png');
     assert_same('GovernmentOrganization', $full['@type']);
     assert_same('АСДР', $full['name']);
     assert_same('г. Ташкент', $full['address']['streetAddress']);
 
-    $min = SchemaOrg::organization('АСДР', 'https://asdr.gov.uz');
+    $min = SchemaOrg::organization('АСДР', 'https://legacy.example.uz');
     assert_false(isset($min['telephone']));
     assert_false(isset($min['address']));
     assert_false(isset($min['logo']));

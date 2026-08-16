@@ -12,7 +12,7 @@ test('Вебхуки: интерфейс объясняет назначение
     assert_contains('Опубликована новая новость', $view);
     assert_contains('webhook.test', $view);
     assert_contains('WebhookDispatcher::SIGNATURE_HEADER', $view);
-    assert_not_contains('X-ArtStudio-Signature', $view);
+    assert_not_contains('X-Legacy-Signature', $view);
     assert_same('X-ASDR-Signature', WebhookDispatcher::SIGNATURE_HEADER);
 });
 

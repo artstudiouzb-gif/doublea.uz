@@ -55,11 +55,11 @@ test('Digest: тема, тело со ссылками и обрезкой, по
     assert_true(str_contains($footer, '/unsubscribe?token=abc123'));
     assert_true(str_contains($footer, 'Отписаться'));
 
-    $uzSubject = Digest::buildSubject('ASDR', '12.07.2026', 'uz');
-    assert_same('Yangiliklar dayjesti — ASDR (12.07.2026)', $uzSubject);
+    $uzSubject = Digest::buildSubject('DoubleA', '12.07.2026', 'uz');
+    assert_same('Yangiliklar dayjesti — DoubleA (12.07.2026)', $uzSubject);
     $uzBody = Digest::buildBody([
         ['title' => 'Yangilik', 'slug' => 'yangilik', 'excerpt' => 'Qisqacha'],
-    ], 'ASDR', 'https://site.uz', 'uz', '/uz');
+    ], 'DoubleA', 'https://site.uz', 'uz', '/uz');
     assert_true(str_contains($uzBody, 'https://site.uz/uz/news/yangilik'));
     assert_same('2026-W29', Digest::periodKey(new \DateTimeImmutable('2026-07-13')));
 });

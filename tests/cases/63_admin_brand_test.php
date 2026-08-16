@@ -12,7 +12,7 @@ test('AdminBrand: значения по умолчанию', function () {
     Setting::set('admin_brand_logo', '');
     Setting::set('admin_brand_accent', '');
 
-    assert_same('ASDR', AdminBrand::name());
+    assert_same('DoubleA', AdminBrand::name());
     assert_same('D', AdminBrand::letter());
     assert_true(AdminBrand::logo() === null, 'логотип не задан');
     assert_same('#2271b1', AdminBrand::accent());

@@ -6,7 +6,7 @@ use App\Core\AppToolbar;
 
 function establish_toolbar_test_session(string $username = 'editor_user', string $role = 'editor'): void
 {
-    $_SERVER['HTTP_USER_AGENT'] = 'asdr-toolbar-test';
+    $_SERVER['HTTP_USER_AGENT'] = 'doublea-toolbar-test';
     $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
     $userId = 1;
 
@@ -37,14 +37,14 @@ function establish_toolbar_test_session(string $username = 'editor_user', string
         $found->execute([':u' => 'toolbar_test_user']);
         $userId = (int) $found->fetchColumn();
 
-        \App\Models\SessionRegistry::register($userId, session_id(), '127.0.0.1', 'asdr-toolbar-test');
+        \App\Models\SessionRegistry::register($userId, session_id(), '127.0.0.1', 'doublea-toolbar-test');
     }
 
     $_SESSION = [
         'user_id' => $userId,
         'username' => $username,
         'role' => $role,
-        'fingerprint' => hash('sha256', 'asdr-toolbar-test|127.0'),
+        'fingerprint' => hash('sha256', 'doublea-toolbar-test|127.0'),
     ];
 }
 

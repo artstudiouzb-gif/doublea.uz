@@ -12,14 +12,14 @@ use App\Core\TelegramBot;
 
 test('Каналы и супергруппы находятся, личная переписка — нет', function () {
     $channels = TelegramBot::matchChannels([
-        ['channel_post' => ['chat' => ['id' => -1001234567890, 'title' => 'Черновик ASDR', 'type' => 'channel']]],
+        ['channel_post' => ['chat' => ['id' => -1001234567890, 'title' => 'Черновик DoubleA', 'type' => 'channel']]],
         ['message' => ['chat' => ['id' => 360874971, 'type' => 'private', 'first_name' => 'Админ']]],
         ['my_chat_member' => ['chat' => ['id' => -1009876543210, 'title' => 'Рабочая группа', 'type' => 'supergroup']]],
     ]);
 
     assert_same(2, count($channels));
     assert_same(-1001234567890, $channels[0]['id']);
-    assert_same('Черновик ASDR', $channels[0]['title']);
+    assert_same('Черновик DoubleA', $channels[0]['title']);
     assert_same('supergroup', $channels[1]['type']);
     // Личный чат в списке не нужен: публикуют в канал, и id вида -100… только там.
     foreach ($channels as $chat) {

@@ -161,7 +161,7 @@ final class SitemapController
         header('Content-Type: application/rss+xml; charset=utf-8');
 
         $baseUrl = AppUrl::base();
-        $siteTitle = \App\Models\Setting::get('site_name', 'ArtStudio');
+        $siteTitle = \App\Models\Setting::get('site_name', 'DoubleA');
 
         $lang = (string) ($params['lang'] ?? '');
         $sql = "SELECT n.* FROM news n WHERE n.status = 'published' AND n.published_at <= NOW() AND n.deleted_at IS NULL";

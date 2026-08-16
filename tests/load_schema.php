@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$dbName = $argv[1] ?? 'asdr_test';
+$dbName = $argv[1] ?? 'doublea_test';
 $host = getenv('TEST_DB_HOST') ?: (getenv('DB_HOST') ?: '127.0.0.1');
 $port = getenv('TEST_DB_PORT') ?: (getenv('DB_PORT') ?: '3306');
 $user = getenv('TEST_DB_USERNAME') ?: (getenv('DB_USERNAME') ?: 'root');

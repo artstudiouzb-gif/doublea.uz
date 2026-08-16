@@ -2,7 +2,7 @@
 
 use App\Models\Setting;
 
-$siteName = Setting::get('site_name', 'ASDR');
+$siteName = Setting::get('site_name', 'DoubleA');
 $message = Setting::get('maintenance_message', 'Сайт временно закрыт на техническое обслуживание. Мы скоро вернёмся.');
 ?>
 <!DOCTYPE html>

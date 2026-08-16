@@ -29,13 +29,13 @@ return [
     'db' => [
         'host' => getenv('DB_HOST') ?: '127.0.0.1',
         'port' => getenv('DB_PORT') ?: '3306',
-        'database' => getenv('DB_DATABASE') ?: 'asdr_cms',
+        'database' => getenv('DB_DATABASE') ?: 'doublea_cms',
         'username' => getenv('DB_USERNAME') ?: 'root',
         'password' => getenv('DB_PASSWORD') ?: '',
         'charset' => 'utf8mb4',
     ],
     'session' => [
-        'name' => 'asc_session',
+        'name' => 'doublea_session',
         'lifetime' => 7200,
         // Жёсткий предел сессии, даже если пользователь остаётся активным.
         'absolute_lifetime' => (int) (getenv('SESSION_ABSOLUTE_LIFETIME') ?: 28800),
@@ -86,7 +86,7 @@ return [
         'username' => getenv('SMTP_USERNAME') ?: '',
         'password' => getenv('SMTP_PASSWORD') ?: '',
         'from_email' => getenv('SMTP_FROM_EMAIL') ?: '',
-        'from_name' => getenv('SMTP_FROM_NAME') ?: 'ASDR CMS',
+        'from_name' => getenv('SMTP_FROM_NAME') ?: 'DoubleA',
         // Селектор DKIM у почтового провайдера (например, 'default' или 'mail').
         // Подпись ставит провайдер; здесь селектор нужен, чтобы
         // scripts/release_check.php проверил наличие записи в DNS.

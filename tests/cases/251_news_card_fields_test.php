@@ -14,7 +14,7 @@ test('NewsCard: сборка полей из формы, границы и му�
         'card_title' => "  Стратегия *развития*  \n  региона  ",
         'card_badge' => ' Стратегический документ ',
         'card_signature' => ' Пресс-служба ',
-        'card_note' => ' asdr.uz ',
+        'card_note' => ' doublea.uz ',
         'card_stats' => [
             ['value' => ' 4 ', 'label' => ' направления '],
             ['value' => '34', 'label' => 'показателя'],
@@ -29,7 +29,7 @@ test('NewsCard: сборка полей из формы, границы и му�
     assert_same('Стратегия *развития* региона', $fields['card_title']);
     assert_same('Стратегический документ', $fields['card_badge']);
     assert_same('Пресс-служба', $fields['card_signature']);
-    assert_same('asdr.uz', $fields['card_note']);
+    assert_same('doublea.uz', $fields['card_note']);
 
     // Пустая пара выбрасывается, больше трёх показателей не берём.
     $stats = NewsCard::stats($fields['card_stats']);

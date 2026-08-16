@@ -13,7 +13,7 @@ test('admin layout exposes accessible responsive navigation controls', function 
     assert_contains('data-sidebar-collapse', $header);
     assert_contains('data-sidebar-backdrop', $header);
     assert_contains('id="admin-content"', $header);
-    assert_contains('artstudio:admin-sidebar-collapsed', $footer);
+    assert_contains('doublea:admin-sidebar-collapsed', $footer);
     assert_contains("e.key === 'Escape'", $footer);
     assert_contains("s.inert = mobile && !open", $footer);
 });

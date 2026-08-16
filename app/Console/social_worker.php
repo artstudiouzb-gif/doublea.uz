@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * Воркер очереди авто-публикаций в соцсети ArtStudio CMS.
+ * Воркер очереди авто-публикаций в соцсети DoubleA.
  *   php app/Console/social_worker.php
  *
  * Запускать по Cron (например, раз в 5 минут — «пятая звёздочка/5»):

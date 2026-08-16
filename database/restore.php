@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * Восстановление бэкапа ArtStudio CMS в ОТДЕЛЬНУЮ тестовую БД и каталог
+ * Восстановление бэкапа DoubleA в ОТДЕЛЬНУЮ тестовую БД и каталог
  * (задача 1.2). НЕ трогает боевую базу и боевые загрузки — предназначен для
  * регулярной проверки, что бэкапы реально разворачиваются.
  *
@@ -11,7 +11,7 @@ declare(strict_types=1);
  *
  * Пример:
  *   php database/restore.php storage/backups/backup_2026-07-06_030000.zip \
- *       artstudio_restore_check /tmp/artstudio_restore_files
+ *       doublea_restore_check /tmp/doublea_restore_files
  *
  * Параметры подключения к тестовой БД берутся из config[db] (host/port/
  * username/password), меняется только имя базы. Целевая БД должна существовать

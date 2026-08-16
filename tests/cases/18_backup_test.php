@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Core\Backup;
 
 test('Backup: контрольная сумма пишется и проверяется, битый архив отвергается (задача 1.2)', function () {
-    $tmp = sys_get_temp_dir() . '/artstudio_bktest_' . bin2hex(random_bytes(4));
+    $tmp = sys_get_temp_dir() . '/doublea_bktest_' . bin2hex(random_bytes(4));
     mkdir($tmp, 0700, true);
     $zip = $tmp . '/backup_test.zip';
     file_put_contents($zip, 'FAKE-ARCHIVE-CONTENT');

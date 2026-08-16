@@ -8,7 +8,7 @@ use App\Core\Session;
 test('Сессия определяется по настроенному cookie без её запуска', function () {
     $cookies = $_COOKIE;
     $sessionConfig = [
-        'name' => (string) Config::get('session.name', 'asc_session'),
+        'name' => (string) Config::get('session.name', 'doublea_session'),
         'lifetime' => (int) Config::get('session.lifetime', 7200),
     ];
     try {

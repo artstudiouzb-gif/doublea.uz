@@ -14,7 +14,7 @@ use App\Models\Setting;
 /** @var string $ogType */
 /** @var array<int, string> $preloadImages */
 
-$siteName = Setting::getLocalized('site_name', \App\Core\Locale::current(), 'ASDR');
+$siteName = Setting::getLocalized('site_name', \App\Core\Locale::current(), 'DoubleA');
 // Логотип: переопределение на текущий язык (Шапка → логотип для языка),
 // иначе общий логотип из Настроек.
 $hcfgAll = \App\Core\HeaderConfig::get();

@@ -25,7 +25,7 @@
         }
     });
 
-    const desktop = window.matchMedia('(min-width: 981px)');
+    const desktop = window.matchMedia('(min-width: 1001px)');
     desktop.addEventListener('change', (event) => {
         if (event.matches) {
             close();

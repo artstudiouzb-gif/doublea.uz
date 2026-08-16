@@ -1,5 +1,6 @@
 {
     "name": "doublea/site",
+    "description": "DoubleA website and content management platform",
     "type": "project",
     "license": "proprietary",
     "require": {},

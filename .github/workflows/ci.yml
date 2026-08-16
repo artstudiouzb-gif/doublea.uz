@@ -22,7 +22,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-          MYSQL_DATABASE: asdr_test
+          MYSQL_DATABASE: doublea_test
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
@@ -43,7 +43,7 @@ jobs:
           coverage: none
 
       - name: Load schema
-        run: php tests/load_schema.php asdr_test
+        run: php tests/load_schema.php doublea_test
 
       - name: PHP lint (php -l)
         run: |
@@ -54,7 +54,7 @@ jobs:
         env:
           TEST_DB_HOST: 127.0.0.1
           TEST_DB_PORT: '3306'
-          TEST_DB_DATABASE: asdr_test
+          TEST_DB_DATABASE: doublea_test
           TEST_DB_USERNAME: root
           TEST_DB_PASSWORD: ''
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -118,7 +118,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-          MYSQL_DATABASE: asdr_browser
+          MYSQL_DATABASE: doublea_browser
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
@@ -145,13 +145,13 @@ jobs:
           APP_URL: http://127.0.0.1:8080
           DB_HOST: 127.0.0.1
           DB_PORT: '3306'
-          DB_DATABASE: asdr_browser
+          DB_DATABASE: doublea_browser
           DB_USERNAME: root
           DB_PASSWORD: ''
         run: |
-          php tests/load_schema.php asdr_browser
+          php tests/load_schema.php doublea_browser
           php -r "
-            \$pdo = new PDO('mysql:host=127.0.0.1;port=3306;dbname=asdr_browser', 'root', '');
+            \$pdo = new PDO('mysql:host=127.0.0.1;port=3306;dbname=doublea_browser', 'root', '');
             \$pdo->exec(\"
               INSERT INTO pages (title, slug, status, is_home, layout_type)
               VALUES ('Главная', 'home', 'published', 1, 'no_sidebar')
@@ -184,17 +184,17 @@ jobs:
           APP_URL: http://127.0.0.1:8080
           DB_HOST: 127.0.0.1
           DB_PORT: '3306'
-          DB_DATABASE: asdr_browser
+          DB_DATABASE: doublea_browser
           DB_USERNAME: root
           DB_PASSWORD: ''
         run: |
-          php -S 127.0.0.1:8080 -t public public/router.php > /tmp/asdr-server.log 2>&1 &
-          echo $! > /tmp/asdr-server.pid
+          php -S 127.0.0.1:8080 -t public public/router.php > /tmp/doublea-server.log 2>&1 &
+          echo $! > /tmp/doublea-server.pid
           for i in $(seq 1 20); do
             if curl --fail --silent http://127.0.0.1:8080/health >/dev/null; then exit 0; fi
             sleep 1
           done
-          cat /tmp/asdr-server.log
+          cat /tmp/doublea-server.log
           exit 1
 
       - name: Run browser smoke tests
@@ -208,5 +208,5 @@ jobs:
           path: |
             playwright-report/
             test-results/
-            /tmp/asdr-server.log
+            /tmp/doublea-server.log
           if-no-files-found: ignore

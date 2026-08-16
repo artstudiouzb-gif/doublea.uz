@@ -1,8 +1,8 @@
-# ArtStudio CMS — образец конфигурации nginx + PHP-FPM.
+# doublea.uz — образец конфигурации nginx + PHP-FPM.
 # nginx НЕ читает .htaccess: этот файл заменяет правила Apache.
-# Скопируйте в /etc/nginx/sites-available/artstudio.conf, поправьте
+# Скопируйте в /etc/nginx/sites-available/doublea.conf, поправьте
 # server_name, root и путь к сокету PHP-FPM, затем:
-#   ln -s ../sites-available/artstudio.conf /etc/nginx/sites-enabled/
+#   ln -s ../sites-available/doublea.conf /etc/nginx/sites-enabled/
 #   nginx -t && systemctl reload nginx
 
 server {
@@ -11,7 +11,7 @@ server {
 
     # ВАЖНО: root указывает на папку public/ проекта, а не на его корень.
     # app/, storage/, config/, database/ остаются вне веб-корня и недоступны.
-    root /var/www/artstudio/public;
+    root /var/www/doublea.uz/public;
     index index.php;
 
     charset utf-8;

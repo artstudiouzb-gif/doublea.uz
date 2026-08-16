@@ -1,0 +1,216 @@
+name: Legacy branding cleanup
+
+on:
+  push:
+    branches:
+      - chore/remove-legacy-cms-branding
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Remove old project identity
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import json
+          import re
+          import shutil
+
+          root = Path('.')
+          skip = {
+              Path('.github/workflows/legacy-brand-audit.yml'),
+              Path('.github/workflows/legacy-brand-cleanup.yml'),
+          }
+
+          replacements = [
+              ('ArtStudio CMS', 'DoubleA'),
+              ('ASDR CMS', 'DoubleA'),
+              ('ASDR-CMS-Webhook', 'DoubleA-Webhook'),
+              ('ArtStudio-Legacy-Import/1.0', 'DoubleA-Legacy-Import/1.0'),
+              ('ArtStudio-Smoke/1.0', 'DoubleA-Smoke/1.0'),
+              ('ArtStudio', 'DoubleA'),
+              ('artstudio.uz', 'doublea.uz'),
+              ('artstudio_uz', 'doublea_uz'),
+              ('artstudio:', 'doublea:'),
+              ('artstudio_restore_', 'doublea_restore_'),
+              ('artstudio-webp-', 'doublea-webp-'),
+              ('artstudio_bktest_', 'doublea_bktest_'),
+              ('asdr-browser-tests', 'doublea-browser-tests'),
+              ('"asdr/cms"', '"doublea/site"'),
+              ('asdr-cms-release.zip', 'doublea-release.zip'),
+              ('asdr-cms-', 'doublea-'),
+              ('asdr-cms/', 'doublea/'),
+              ('https://asdr.gov.uz', 'https://legacy.example.uz'),
+              ('asdr.gov.uz', 'legacy.example.uz'),
+              ('asdr.uz', 'doublea.uz'),
+              ('asdr-header-active-tab', 'doublea-header-active-tab'),
+              ('asdr-toolbar-test', 'doublea-toolbar-test'),
+              ('asdr_integrity_', 'doublea_integrity_'),
+              ('asdr-upload-', 'doublea-upload-'),
+              ('asdr-dump-', 'doublea-dump-'),
+              ('asc_session', 'doublea_session'),
+              ('https://github.com/artstudiouzb-gif/asdr.git', 'https://github.com/artstudiouzb-gif/doublea.uz.git'),
+              ('test_asdr_ci', 'test_doublea_ci'),
+          ]
+
+          for path in root.rglob('*'):
+              if not path.is_file() or path in skip or '.git' in path.parts:
+                  continue
+              try:
+                  text = path.read_text(encoding='utf-8')
+              except (UnicodeDecodeError, OSError):
+                  continue
+              updated = text
+              for old, new in replacements:
+                  updated = updated.replace(old, new)
+              if updated != text:
+                  path.write_text(updated, encoding='utf-8')
+
+          standalone_asdr_files = [
+              'app/Core/AdminBrand.php',
+              'app/Core/AdminUi.php',
+              'app/Core/DigestDispatcher.php',
+              'app/Views/site/_footer.php',
+              'app/Views/site/_header.php',
+              'app/Views/site/components/admin_toolbar.php',
+              'app/Views/errors/maintenance.php',
+              'app/Controllers/Admin/ProfileController.php',
+              'app/Controllers/Site/ManifestController.php',
+              'tests/cases/45_digest_test.php',
+              'tests/cases/63_admin_brand_test.php',
+              'tests/cases/208_telegram_channel_detect_test.php',
+          ]
+          for rel in standalone_asdr_files:
+              path = Path(rel)
+              if path.exists():
+                  text = path.read_text(encoding='utf-8')
+                  path.write_text(re.sub(r'\bASDR\b', 'DoubleA', text), encoding='utf-8')
+
+          targeted = {
+              'config/config.example.php': [('asdr_cms', 'doublea_cms')],
+              'app/Views/install/step2.php': [('asdr_cms', 'doublea_cms')],
+              'app/Controllers/InstallController.php': [
+                  ('asdr_cms', 'doublea_cms'),
+                  ("tempnam($directory, '.asdr-')", "tempnam($directory, '.doublea-')"),
+              ],
+              '.github/workflows/ci.yml': [
+                  ('asdr_test', 'doublea_test'),
+                  ('asdr_browser', 'doublea_browser'),
+                  ('/tmp/asdr-server', '/tmp/doublea-server'),
+              ],
+              '.github/workflows/release.yml': [('asdr_release', 'doublea_release')],
+              'tests/load_schema.php': [("'asdr_test'", "'doublea_test'")],
+              'database/doctor.php': [('ASDR DB Doctor', 'DoubleA DB Doctor')],
+              'Makefile': [(' (asdr)', '')],
+              'docs/DEV.md': [
+                  (' (asdr)', ''),
+                  ('cd asdr', 'cd doublea.uz'),
+                  ('asdr/', 'doublea.uz/'),
+              ],
+              'tests/cases/185_webhooks_admin_test.php': [('X-DoubleA-Signature', 'X-Legacy-Signature')],
+          }
+          for rel, pairs in targeted.items():
+              path = Path(rel)
+              if not path.exists():
+                  continue
+              text = path.read_text(encoding='utf-8')
+              for old, new in pairs:
+                  text = text.replace(old, new)
+              path.write_text(text, encoding='utf-8')
+
+          for rel in ['CLAUDE.md', 'PRE_RELEASE_TASKS.md', 'WORK_COMPLETED.md', 'docs/PERFORMANCE_PLAN.md']:
+              path = Path(rel)
+              if path.exists():
+                  path.unlink()
+          if Path('.claude').exists():
+              shutil.rmtree('.claude')
+
+          readme_lines = [
+              '# doublea.uz',
+              '',
+              'Web project for **doublea.uz**.',
+              '',
+              'The repository keeps the existing PHP/MySQL administration and content-management backend while the public frontend is being rebuilt as an independent V2 layer.',
+              '',
+              '## Structure',
+              '',
+              '- `app/Controllers/Admin/`, `app/Views/admin/` — administration and CMS workflows.',
+              '- `app/Models/`, `app/Core/` — application and content infrastructure.',
+              '- `app/Views/site/v2/` — new public frontend templates.',
+              '- `public/assets/css/frontend-v2.css` — isolated V2 styles.',
+              '- `public/assets/js/frontend-v2.js` — isolated V2 interactions.',
+              '- `templates/` — content blocks and widgets used by the backend.',
+              '',
+              'The legacy public frontend remains only during the migration period and is not the design source for V2.',
+              '',
+              '## Requirements',
+              '',
+              '- PHP 8.2+',
+              '- MySQL 5.7+ or MariaDB 10.3+',
+              '- Apache or nginx with the document root pointed to `public/`',
+              '',
+              '## Development checks',
+              '',
+              '```bash',
+              'php tests/run.php',
+              'composer analyse',
+              'npm ci',
+              'npm run check:assets',
+              'npm run test:browser',
+              '```',
+              '',
+              'Production runtime does not require Node.js tooling; npm and Composer development dependencies are used for validation and CI.',
+              '',
+          ]
+          Path('README.md').write_text('\n'.join(readme_lines), encoding='utf-8')
+
+          composer = Path('composer.json')
+          if composer.exists():
+              data = json.loads(composer.read_text(encoding='utf-8'))
+              data['name'] = 'doublea/site'
+              data.pop('description', None)
+              composer.write_text(json.dumps(data, ensure_ascii=False, indent=4) + '\n', encoding='utf-8')
+          PY
+
+      - name: Validate source after cleanup
+        shell: bash
+        run: |
+          set -e
+          find app config database scripts tests -type f -name '*.php' -print0 | xargs -0 -n1 php -l >/tmp/php-lint.log
+          npm ci
+          npm run check:assets
+          php tests/run.php
+
+      - name: Verify former branding is gone
+        shell: bash
+        run: |
+          set -e
+          git rm -f --ignore-unmatch .github/workflows/legacy-brand-audit.yml .github/workflows/legacy-brand-cleanup.yml
+          if grep -RInE --exclude-dir=.git '(ArtStudio|artstudio[.:_/-]|ASDR CMS|asdr-browser-tests|https://asdr\.gov\.uz)' .; then
+            echo 'Former branding still present.' >&2
+            exit 1
+          fi
+
+      - name: Commit cleanup
+        shell: bash
+        run: |
+          set -e
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'No cleanup changes to commit.'
+            exit 0
+          fi
+          git commit -m 'chore(branding): remove legacy CMS identity'
+          git push origin HEAD:chore/remove-legacy-cms-branding
